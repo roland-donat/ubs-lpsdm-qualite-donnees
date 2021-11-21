@@ -254,20 +254,20 @@ for the JavaScript code in this tag.
 <h2>Table des matières</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgf23a924">1. Objectif</a></li>
-<li><a href="#orga9fc6f7">2. Environnement de travail</a></li>
-<li><a href="#org0f8f5da">3. Rappel de la démarche de modélisation décisionnelle</a></li>
-<li><a href="#orgb36dfee">4. Fichiers tabulaires</a>
+<li><a href="#org941bb57">1. Objectif</a></li>
+<li><a href="#org062a1d5">2. Environnement de travail</a></li>
+<li><a href="#org90dca16">3. Rappel de la démarche de modélisation décisionnelle</a></li>
+<li><a href="#org20c8a45">4. Fichiers tabulaires</a>
 <ul>
-<li><a href="#org4832d21">4.1. Format CSV</a></li>
-<li><a href="#orgc013a2f">4.2. Format <code>xlsx</code></a></li>
+<li><a href="#org832fbd4">4.1. Format CSV</a></li>
+<li><a href="#org57482d4">4.2. Format <code>xlsx</code></a></li>
 </ul>
 </li>
-<li><a href="#org796705f">5. Format <code>json</code></a></li>
-<li><a href="#orga98ebc6">6. Format <code>YAML</code></a></li>
-<li><a href="#org5eca5af">7. Format <code>XML</code></a></li>
-<li><a href="#orga558d77">8. Connexion à une API REST</a></li>
-<li><a href="#org2ca52b9">9. <i>Web scraping</i></a></li>
+<li><a href="#orgc5d7f96">5. Format <code>json</code></a></li>
+<li><a href="#orga486edb">6. Format <code>YAML</code></a></li>
+<li><a href="#orgb25c39f">7. Format <code>XML</code></a></li>
+<li><a href="#orga3b489d">8. Connexion à une API REST</a></li>
+<li><a href="#orga1e6c8f">9. <i>Web scraping</i></a></li>
 </ul>
 </div>
 </div>
@@ -283,8 +283,8 @@ for the JavaScript code in this tag.
 </div>
 
 
-<div id="outline-container-orgf23a924" class="outline-2">
-<h2 id="orgf23a924"><span class="section-number-2">1</span> Objectif</h2>
+<div id="outline-container-org941bb57" class="outline-2">
+<h2 id="org941bb57"><span class="section-number-2">1</span> Objectif</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Ce TD a pour objectif de :
@@ -297,8 +297,8 @@ Ce TD a pour objectif de :
 </div>
 </div>
 
-<div id="outline-container-orga9fc6f7" class="outline-2">
-<h2 id="orga9fc6f7"><span class="section-number-2">2</span> Environnement de travail</h2>
+<div id="outline-container-org062a1d5" class="outline-2">
+<h2 id="org062a1d5"><span class="section-number-2">2</span> Environnement de travail</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Dans cette session, nous allons travailler sur <a href="https://deepnote.com/">Deepnote</a>. <a href="https://deepnote.com/">Deepnote</a> est une plateforme de
@@ -317,8 +317,8 @@ Avant de débuter le travail, veuillez à :
 </div>
 </div>
 
-<div id="outline-container-org0f8f5da" class="outline-2">
-<h2 id="org0f8f5da"><span class="section-number-2">3</span> Rappel de la démarche de modélisation décisionnelle</h2>
+<div id="outline-container-org90dca16" class="outline-2">
+<h2 id="org90dca16"><span class="section-number-2">3</span> Rappel de la démarche de modélisation décisionnelle</h2>
 <div class="outline-text-2" id="text-3">
 
 <div class="figure">
@@ -329,8 +329,8 @@ Avant de débuter le travail, veuillez à :
 </div>
 </div>
 
-<div id="outline-container-orgb36dfee" class="outline-2">
-<h2 id="orgb36dfee"><span class="section-number-2">4</span> Fichiers tabulaires</h2>
+<div id="outline-container-org20c8a45" class="outline-2">
+<h2 id="org20c8a45"><span class="section-number-2">4</span> Fichiers tabulaires</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 Un fichier au format dit "tabulaire" est tout simplement un fichier dont les données peuvent se
@@ -345,8 +345,8 @@ Le format tabulaire le plus utilisé est le format CSV (<i>Comma Separated Value
 </p>
 </div>
 
-<div id="outline-container-org4832d21" class="outline-3">
-<h3 id="org4832d21"><span class="section-number-3">4.1</span> Format CSV</h3>
+<div id="outline-container-org832fbd4" class="outline-3">
+<h3 id="org832fbd4"><span class="section-number-3">4.1</span> Format CSV</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 <b>Caractéristiques :</b>
@@ -372,22 +372,22 @@ Le format tabulaire le plus utilisé est le format CSV (<i>Comma Separated Value
 <pre class="src src-python"><span style="color: #F0DFAF; font-weight: bold;">import</span> pandas <span style="color: #F0DFAF; font-weight: bold;">as</span> pd
 
 <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Lecture</span>
-<span style="color: #DFAF8F;">data_path</span> = <span style="color: #CC9393;">"https://roland-donat.github.io/ubs-lpmds-python/td/data/stadiums.csv"</span>
-<span style="color: #DFAF8F;">data</span> = pd.read_csv(data_path)
+<span style="color: #DFAF8F;">data_csv_path</span> = <span style="color: #CC9393;">"https://roland-donat.github.io/ubs-lpsdm-qualite-donnees/2021-2022/datatype/data/stadiums.csv"</span>
+<span style="color: #DFAF8F;">data_csv</span> = pd.read_csv(data_csv_path)
 
 <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Modification</span>
-<span style="color: #DFAF8F;">data</span> = data.drop(columns=[<span style="color: #CC9393;">"Team"</span>])
-data.rename(columns={<span style="color: #CC9393;">"FDCOUK"</span>: <span style="color: #CC9393;">"Team ID"</span>}, inplace=<span style="color: #BFEBBF;">True</span>)
+<span style="color: #DFAF8F;">data_csv</span> = data_csv.drop(columns=[<span style="color: #CC9393;">"Team"</span>])
+data_csv.rename(columns={<span style="color: #CC9393;">"FDCOUK"</span>: <span style="color: #CC9393;">"Team ID"</span>}, inplace=<span style="color: #BFEBBF;">True</span>)
 
 <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">&#201;criture</span>
-data.to_csv(<span style="color: #CC9393;">"stadiums_new.csv"</span>)
+data_csv.to_csv(<span style="color: #CC9393;">"stadiums_new.csv"</span>)
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgc013a2f" class="outline-3">
-<h3 id="orgc013a2f"><span class="section-number-3">4.2</span> Format <code>xlsx</code></h3>
+<div id="outline-container-org57482d4" class="outline-3">
+<h3 id="org57482d4"><span class="section-number-3">4.2</span> Format <code>xlsx</code></h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 <b>Caractéristiques :</b>
@@ -422,15 +422,11 @@ chaîne) et de la mise en forme visuelle.</li>
 <pre class="src src-python"><span style="color: #F0DFAF; font-weight: bold;">import</span> pandas <span style="color: #F0DFAF; font-weight: bold;">as</span> pd
 
 <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Lecture</span>
-<span style="color: #DFAF8F;">data_path</span> = <span style="color: #CC9393;">"https://roland-donat.github.io/ubs-lpmds-python/td/data/stadiums.csv"</span>
-<span style="color: #DFAF8F;">data</span> = pd.read_csv(data_path)
-
-<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Modification</span>
-<span style="color: #DFAF8F;">data</span> = data.drop(columns=[<span style="color: #CC9393;">"Team"</span>])
-data.rename(columns={<span style="color: #CC9393;">"FDCOUK"</span>: <span style="color: #CC9393;">"Team ID"</span>}, inplace=<span style="color: #BFEBBF;">True</span>)
+<span style="color: #DFAF8F;">data_xlsx_path</span> = <span style="color: #DFAF8F;">data_path</span> = <span style="color: #CC9393;">"https://roland-donat.github.io/ubs-lpsdm-qualite-donnees/2021-2022/datatype/data/myco.xlsx"</span>
+<span style="color: #DFAF8F;">data_xlsx</span> = pd.read_excel(data_path)
 
 <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">&#201;criture</span>
-data.to_csv(<span style="color: #CC9393;">"stadiums_new.csv"</span>)
+data_xlsx.to_csv(<span style="color: #CC9393;">"myco.csv"</span>, sep=<span style="color: #CC9393;">";"</span>)
 </pre>
 </div>
 </div>
@@ -438,24 +434,24 @@ data.to_csv(<span style="color: #CC9393;">"stadiums_new.csv"</span>)
 </div>
 
 
-<div id="outline-container-org796705f" class="outline-2">
-<h2 id="org796705f"><span class="section-number-2">5</span> Format <code>json</code></h2>
+<div id="outline-container-orgc5d7f96" class="outline-2">
+<h2 id="orgc5d7f96"><span class="section-number-2">5</span> Format <code>json</code></h2>
 </div>
 
-<div id="outline-container-orga98ebc6" class="outline-2">
-<h2 id="orga98ebc6"><span class="section-number-2">6</span> Format <code>YAML</code></h2>
+<div id="outline-container-orga486edb" class="outline-2">
+<h2 id="orga486edb"><span class="section-number-2">6</span> Format <code>YAML</code></h2>
 </div>
 
-<div id="outline-container-org5eca5af" class="outline-2">
-<h2 id="org5eca5af"><span class="section-number-2">7</span> Format <code>XML</code></h2>
+<div id="outline-container-orgb25c39f" class="outline-2">
+<h2 id="orgb25c39f"><span class="section-number-2">7</span> Format <code>XML</code></h2>
 </div>
 
-<div id="outline-container-orga558d77" class="outline-2">
-<h2 id="orga558d77"><span class="section-number-2">8</span> Connexion à une API REST</h2>
+<div id="outline-container-orga3b489d" class="outline-2">
+<h2 id="orga3b489d"><span class="section-number-2">8</span> Connexion à une API REST</h2>
 </div>
 
-<div id="outline-container-org2ca52b9" class="outline-2">
-<h2 id="org2ca52b9"><span class="section-number-2">9</span> <i>Web scraping</i></h2>
+<div id="outline-container-orga1e6c8f" class="outline-2">
+<h2 id="orga1e6c8f"><span class="section-number-2">9</span> <i>Web scraping</i></h2>
 </div>
 </div>
 </body>
