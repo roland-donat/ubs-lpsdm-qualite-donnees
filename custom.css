@@ -1,0 +1,174 @@
+/*********************************************
+ * Variables
+ *********************************************/
+
+:root {
+  --primary-color: #7a1d90;
+  --secondary-color: #9e51ae;
+  --tertiary-color: #b370be;
+  --quaternary-color:  #ff8e71;
+  --quinary-color:  #9f5f80;
+
+  --block-code-bg-color:  #343131;
+  --block-code-text-color:  #CCCCCC;
+  
+  --primary-text-color: black;
+  --main-slide-text-color: black;
+}
+
+
+/* /\********************************************* */
+/*  * General settings */
+/*  *********************************************\/ */
+body {
+    font-family: "Helvetica";
+    font-size: 12pt;
+    color: #393939;
+    background-color: #ffffff; }
+
+/* /\********************************************* */
+/*  * Title */
+/*  *********************************************\/ */
+
+h1.title {
+  background: url(https://roland-donat.github.io/ubs/Charte_graphique/IUT/logo_ubs_iut.png), url(https://roland-donat.github.io/ubs/Charte_graphique/ubs/logo_ubs.png);
+  background-position: left top, right top;
+  background-size: 75px;
+  background-repeat: no-repeat;
+  color: var(--primary-color);
+  padding-top: 60px;
+  }
+
+
+/* /\********************************************* */
+/*  * Table of contents */
+/*  *********************************************\/ */
+
+/* #table-of-contents h2 { */
+/*   Background-color: var(--primary-color); */
+/*   color: white; */
+/*   } */
+
+/* /\********************************************* */
+/*  * Headers */
+/*  *********************************************\/ */
+
+/* h2 { */
+/*     color: var(--primary-color); */
+/*     font-size: 120%; */
+/* } */
+
+/* h3 { */
+/*   color: var(--quinary-color); */
+/*   font-size: 110%; */
+/*   font-weight: normal; */
+/* } */
+
+
+/* h4 { */
+/*   color: var(--tertiary-color); */
+/*   font-size: 100%; */
+/*   font-weight: normal; */
+/* } */
+
+/* /\********************************************* */
+/*  * Lists */
+/*  *********************************************\/ */
+
+/* dl { */
+/*   width: 100%; */
+/*   overflow: hidden; */
+/*   padding: 0; */
+/*   margin: 0; */
+/* } */
+/* dt { */
+/*   color: var(--quaternary-color); */
+/*     /\* adjust the width; make sure the total of both is 100% *\/ */
+/*   padding: 0; */
+/*   display: block; */
+/* } */
+/* dd { */
+/*   margin-left: 15px; */
+/*   /\* adjust the width; make sure the total of both is 100% *\/ */
+/*   padding: 0; */
+/*   display: inline; */
+/* } */
+
+
+/* /\********************************************* */
+/*  * Table */
+/*  *********************************************\/ */
+/* table { */
+/*     border: 1px solid black; */
+/* } */
+
+/* th { */
+/*   background-color: var(--secondary-color); */
+/*   color: #c9d4e6; */
+/* } */
+
+/* td { */
+/*   background-color: #c9d4e6; */
+/* } */
+
+/* th, td { */
+/*     font-size: 90%; */
+/* } */
+
+/* /\* Org-table *\/ */
+/* th.org-left { */
+/*     text-align: left; */
+/* } */
+
+
+/* /\********************************************* */
+/*  * LINKS */
+/*  *********************************************\/ */
+/* a { */
+/*   color: var(--tertiary-color); */
+/*   text-decoration: none; */
+/*   -webkit-transition: color 0.15s ease; */
+/*   -moz-transition: color 0.15s ease; */
+/*   transition: color 0.15s ease; } */
+
+/* a:hover { */
+/*   color: var(--quinary-color); */
+/*   text-shadow: none; */
+/*   border: none; } */
+
+
+
+/* /\********************************************* */
+/*  * Bibliography */
+/*  *********************************************\/ */
+
+/* .org-ref-bib-h1 { */
+/*     display: none; */
+/* } */
+
+
+/* /\********************************************* */
+/*  * ascii-art */
+/*  *********************************************\/ */
+/* .ascii-art { */
+/*     font-family: "monospace"; */
+/*     font-size: 8pt; */
+/* } */
+
+/* /\********************************************* */
+/*  * Inline code */
+/*  *********************************************\/ */
+
+/* code { */
+/*   font-size: 100%; */
+/* } */
+
+
+/* /\********************************************* */
+/*  * Org-src block */
+/*  *********************************************\/ */
+
+/* .codeblock, pre.src, #content .literal-block{ */
+/*     color: var(--block-code-text-color); */
+/*     background: var(--block-code-bg-color); */
+/* }                               */
