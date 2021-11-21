@@ -254,19 +254,19 @@ for the JavaScript code in this tag.
 <h2>Table des matières</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org9aabbe0">1. Objectif</a></li>
-<li><a href="#orgf89a8d5">2. Environnement de travail</a></li>
-<li><a href="#org4f16241">3. Fichiers tabulaires</a>
+<li><a href="#org00d2b88">1. Objectif</a></li>
+<li><a href="#orgf30ddbd">2. Environnement de travail</a></li>
+<li><a href="#orga7949ab">3. Fichiers tabulaires</a>
 <ul>
-<li><a href="#org7755e27">3.1. Format CSV</a></li>
-<li><a href="#org971c31d">3.2. Format <code>xlsx</code></a></li>
+<li><a href="#org0af0680">3.1. Format CSV</a></li>
+<li><a href="#org471c762">3.2. Format <code>xlsx</code></a></li>
 </ul>
 </li>
-<li><a href="#org5ed56ea">4. Format <code>json</code></a></li>
-<li><a href="#org52b133c">5. Format <code>YAML</code></a></li>
-<li><a href="#org1b9eddb">6. Format <code>XML</code></a></li>
-<li><a href="#org0ba9edc">7. Connexion à une API REST</a></li>
-<li><a href="#org779c501">8. <i>Web scraping</i></a></li>
+<li><a href="#org22763f8">4. Format JSON</a></li>
+<li><a href="#org7340227">5. Connexion à une API REST</a></li>
+<li><a href="#orgbe9a29e">6. Format <code>YAML</code></a></li>
+<li><a href="#org94ad5ad">7. Format <code>XML</code></a></li>
+<li><a href="#org69b94dc">8. <i>Web scraping</i></a></li>
 </ul>
 </div>
 </div>
@@ -282,8 +282,8 @@ for the JavaScript code in this tag.
 </div>
 
 
-<div id="outline-container-org9aabbe0" class="outline-2">
-<h2 id="org9aabbe0"><span class="section-number-2">1</span> Objectif</h2>
+<div id="outline-container-org00d2b88" class="outline-2">
+<h2 id="org00d2b88"><span class="section-number-2">1</span> Objectif</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Ce TD a pour objectif de :
@@ -296,8 +296,8 @@ Ce TD a pour objectif de :
 </div>
 </div>
 
-<div id="outline-container-orgf89a8d5" class="outline-2">
-<h2 id="orgf89a8d5"><span class="section-number-2">2</span> Environnement de travail</h2>
+<div id="outline-container-orgf30ddbd" class="outline-2">
+<h2 id="orgf30ddbd"><span class="section-number-2">2</span> Environnement de travail</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Dans cette session, nous allons travailler sur <a href="https://deepnote.com/">Deepnote</a>. <a href="https://deepnote.com/">Deepnote</a> est une plateforme de
@@ -316,8 +316,8 @@ Avant de débuter le travail, veuillez à :
 </div>
 </div>
 
-<div id="outline-container-org4f16241" class="outline-2">
-<h2 id="org4f16241"><span class="section-number-2">3</span> Fichiers tabulaires</h2>
+<div id="outline-container-orga7949ab" class="outline-2">
+<h2 id="orga7949ab"><span class="section-number-2">3</span> Fichiers tabulaires</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Un fichier au format dit "tabulaire" est tout simplement un fichier dont les données peuvent se
@@ -332,8 +332,8 @@ Le format tabulaire le plus utilisé est le format CSV (<i>Comma Separated Value
 </p>
 </div>
 
-<div id="outline-container-org7755e27" class="outline-3">
-<h3 id="org7755e27"><span class="section-number-3">3.1</span> Format CSV</h3>
+<div id="outline-container-org0af0680" class="outline-3">
+<h3 id="org0af0680"><span class="section-number-3">3.1</span> Format CSV</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 <b>Caractéristiques :</b>
@@ -348,8 +348,8 @@ Le format tabulaire le plus utilisé est le format CSV (<i>Comma Separated Value
 </p>
 <ul class="org-ul">
 <li>Utilisation de la librairie <code>Pandas</code>.</li>
-<li>Lecture des données avec <code>read_csv</code>.</li>
-<li>Écriture des données avec <code>to_csv</code>.</li>
+<li>Lecture des données avec la fonction <code>read_csv</code>.</li>
+<li>Écriture des données avec la méthode <code>to_csv</code>.</li>
 </ul>
 
 <p>
@@ -374,8 +374,8 @@ data_csv.to_csv(<span style="color: #CC9393;">"stadiums_new.csv"</span>, index=<
 </div>
 </div>
 
-<div id="outline-container-org971c31d" class="outline-3">
-<h3 id="org971c31d"><span class="section-number-3">3.2</span> Format <code>xlsx</code></h3>
+<div id="outline-container-org471c762" class="outline-3">
+<h3 id="org471c762"><span class="section-number-3">3.2</span> Format <code>xlsx</code></h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 <b>Caractéristiques :</b>
@@ -394,8 +394,8 @@ chaîne) et de la mise en forme visuelle.</li>
 <ul class="org-ul">
 <li>Utilisation de la librairie <code>Pandas</code>.
 <ul class="org-ul">
-<li>lecture des données avec <code>read_csv</code> ;</li>
-<li>écriture des données avec <code>to_csv</code>.</li>
+<li>lecture des données avec la fonction <code>read_excel</code> ;</li>
+<li>écriture des données avec la méthode <code>to_excel</code>.</li>
 </ul></li>
 <li>La librairie <code>openpyxl</code> doit être installée (<code>!pip install openpyxl</code>) pour ouvrir un fichier
 <code>xlsx</code> avec <code>Pandas</code>.</li>
@@ -453,24 +453,115 @@ data_xlsx_template.drop(columns=[col <span style="color: #F0DFAF; font-weight: b
 </div>
 </div>
 
-<div id="outline-container-org5ed56ea" class="outline-2">
-<h2 id="org5ed56ea"><span class="section-number-2">4</span> Format <code>json</code></h2>
+<div id="outline-container-org22763f8" class="outline-2">
+<h2 id="org22763f8"><span class="section-number-2">4</span> Format JSON</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+<b>Caractéristiques :</b>
+</p>
+<ul class="org-ul">
+<li>Le format JSON (<i>JavaScript Object Notation</i>) est un format d'échange de données dont la syntaxe
+s'inspire des objets du langage <code>JavaScript</code>.</li>
+<li>Sa simplicité et son expressivité ont fait de JSON un des standard d'échange de données les plus
+utilisés à l'heure actuelle.</li>
+<li>Le format JSON peut représenter des nombres, des booléens, des chaînes, la valeur <code>null</code>, des
+séquences de valeurs ordonnées, des objets, etc.</li>
+<li>Le format s'articule autour de deux structures de données élémentaires :
+<ul class="org-ul">
+<li>les collections de paires clé/valeur, très similaires aux dictionnaires <code>Python</code> ;</li>
+<li>les liste ordonnée de valeurs, très similaires aux listes <code>Python</code>.</li>
+</ul></li>
+</ul>
+
+<p>
+<b>Exemple de données JSON :</b>
+</p>
+<div class="org-src-container">
+<pre class="src src-python">{
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span> <span style="color: #CC9393;">"data"</span>: [
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   {
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span> <span style="color: #CC9393;">"name"</span>: <span style="color: #CC9393;">"Banane"</span>,
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span> <span style="color: #CC9393;">"price"</span>: 5.99,
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span> <span style="color: #CC9393;">"code"</span>: 77
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   },
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   {
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span> <span style="color: #CC9393;">"name"</span>: <span style="color: #CC9393;">"Pomme"</span>,
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span> <span style="color: #CC9393;">"price"</span>: 2.99,
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span> <span style="color: #CC9393;">"code"</span>: 99
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   },
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   {
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span> <span style="color: #CC9393;">"name"</span>: <span style="color: #CC9393;">"Poire"</span>,
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span> <span style="color: #CC9393;">"price"</span>: 7.99,
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span> <span style="color: #CC9393;">"code"</span>: 170
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   }
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span> ]
+}
+</pre>
 </div>
 
-<div id="outline-container-org52b133c" class="outline-2">
-<h2 id="org52b133c"><span class="section-number-2">5</span> Format <code>YAML</code></h2>
+<p>
+<b>Traitements <code>Python</code> :</b>
+</p>
+<ul class="org-ul">
+<li>Utilisation du module <code>json</code>.
+<ul class="org-ul">
+<li>lecture des données avec la fonction <code>load</code> ;</li>
+<li>écriture des données avec la fonction <code>dump</code>.</li>
+</ul></li>
+<li>Manipulation intermédiaire avec <code>Pandas</code>.</li>
+</ul>
+
+<p>
+<b>Exemple :</b>
+</p>
+<ul class="org-ul">
+<li>Télécharger le fichier <a href="https://roland-donat.github.io/ubs-lpsdm-qualite-donnees/2021-2022/datatype/data/station_status.json">station_status.json</a> sur votre poste.</li>
+<li>Importer le fichier par glisser-déposer dans votre environnement Deepnote.</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #F0DFAF; font-weight: bold;">import</span> json
+<span style="color: #F0DFAF; font-weight: bold;">import</span> pandas <span style="color: #F0DFAF; font-weight: bold;">as</span> pd
+
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Lecture des donn&#233;es sous la forme d'un dictionnaire</span>
+<span style="color: #DFAF8F;">data_json_path</span> = <span style="color: #CC9393;">"station_status.json"</span>
+<span style="color: #F0DFAF; font-weight: bold;">with</span> <span style="color: #DCDCCC; font-weight: bold;">open</span>(data_json_path, <span style="color: #CC9393;">'r'</span>) <span style="color: #F0DFAF; font-weight: bold;">as</span> json_file:
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DFAF8F;">data_json</span> = json.load(json_file)
+
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Conversion de la partie `data/stations` en DataFrame pour traitements</span>
+<span style="color: #DFAF8F;">stations_df</span> = pd.DataFrame(data_json[<span style="color: #CC9393;">"data"</span>][<span style="color: #CC9393;">"stations"</span>])
+
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Conversion de l'instant de mise &#224; jour (en secondes) en date </span>
+<span style="color: #DFAF8F;">stations_df</span>[<span style="color: #CC9393;">"last_reported_dt"</span>] = \
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   pd.to_datetime(stations_df[<span style="color: #CC9393;">"last_reported"</span>], unit=<span style="color: #CC9393;">"s"</span>)\
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span> .astype(<span style="color: #DCDCCC; font-weight: bold;">str</span>)
+
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Mise &#224; jour du dictionnaire de donn&#233;es initial avec les nouvelles donn&#233;es</span>
+data_json[<span style="color: #CC9393;">"data"</span>][<span style="color: #CC9393;">"stations"</span>] = stations_df.to_dict(<span style="color: #CC9393;">"records"</span>)
+
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">&#201;criture du dictionnaire mis &#224; jour sous forme de fichier json</span>
+<span style="color: #DFAF8F;">data_json_bis_path</span> = <span style="color: #CC9393;">"station_status_bis.json"</span>
+<span style="color: #F0DFAF; font-weight: bold;">with</span> <span style="color: #DCDCCC; font-weight: bold;">open</span>(data_json_bis_path, <span style="color: #CC9393;">'w'</span>) <span style="color: #F0DFAF; font-weight: bold;">as</span> json_file:
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   json.dump(data_json, json_file)
+</pre>
+</div>
+</div>
 </div>
 
-<div id="outline-container-org1b9eddb" class="outline-2">
-<h2 id="org1b9eddb"><span class="section-number-2">6</span> Format <code>XML</code></h2>
+
+<div id="outline-container-org7340227" class="outline-2">
+<h2 id="org7340227"><span class="section-number-2">5</span> Connexion à une API REST</h2>
 </div>
 
-<div id="outline-container-org0ba9edc" class="outline-2">
-<h2 id="org0ba9edc"><span class="section-number-2">7</span> Connexion à une API REST</h2>
+<div id="outline-container-orgbe9a29e" class="outline-2">
+<h2 id="orgbe9a29e"><span class="section-number-2">6</span> Format <code>YAML</code></h2>
 </div>
 
-<div id="outline-container-org779c501" class="outline-2">
-<h2 id="org779c501"><span class="section-number-2">8</span> <i>Web scraping</i></h2>
+<div id="outline-container-org94ad5ad" class="outline-2">
+<h2 id="org94ad5ad"><span class="section-number-2">7</span> Format <code>XML</code></h2>
+</div>
+
+<div id="outline-container-org69b94dc" class="outline-2">
+<h2 id="org69b94dc"><span class="section-number-2">8</span> <i>Web scraping</i></h2>
 </div>
 </div>
 </body>
