@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>LP SDM - Module Qualité des Données</title>
+<title>Techniques de traitement des sources de données usuelles avec <code>Python</code></title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="Roland Donat" />
 <style type="text/css">
@@ -249,59 +249,128 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<h1 class="title">LP SDM - Module Qualité des Données</h1>
+<h1 class="title">Techniques de traitement des sources de données usuelles avec <code>Python</code></h1>
 <div id="table-of-contents">
 <h2>Table des matières</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgea0e795">1. Introduction</a></li>
-<li><a href="#orgab14d99">2. Sessions 2021-2022</a></li>
-<li><a href="#org572b0ba">3. Sessions 2020-2021</a></li>
+<li><a href="#org92ef315">1. Objectif</a></li>
+<li><a href="#org6182d7d">2. Environnement de travail</a></li>
+<li><a href="#orgc3602ff">3. Rappel de la démarche de modélisation décisionnelle</a></li>
+<li><a href="#org141f257">4. Fichiers tabulaires</a>
+<ul>
+<li><a href="#org4f8c08a">4.1. Format CSV</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
 
 
-<div id="outline-container-orgea0e795" class="outline-2">
-<h2 id="orgea0e795"><span class="section-number-2">1</span> Introduction</h2>
+
+
+
+
+<div class="figure">
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Minard.png/1920px-Minard.png" alt="Data dypes" width="80%" />
+</p>
+</div>
+
+
+<div id="outline-container-org92ef315" class="outline-2">
+<h2 id="org92ef315"><span class="section-number-2">1</span> Objectif</h2>
 <div class="outline-text-2" id="text-1">
 <p>
-Ce module a pour objectif d'apporter aux étudiant-e-s des compléments techniques et
-scientifiques sur le traitement des données en rapport avec les problématiques abordées dans les
-projets tutorés. Le contenu pédagogique de "Qualité des données" s'adapte donc chaque année en
-fonction du besoin des étudiant-e-s.
+Ce TD a pour objectif de :
 </p>
-
-<p>
-Il est à noter que les sessions de qualité des données prennent la forme de cours/TD de 1h30 ou 3h
-au cours desquels un premier éclairage est apporté sur un sujet technique donné. Les étudiant-e-s
-sont bien sûr fortement encouragés à enrichir leurs connaissances sur les différents thèmes abordés
-en autonomie. 
-</p>
-
-<p>
-En dehors des cours en présentiel, nous communiquerons <i>via</i> l'équipe <code>Teams</code>
-<a href="https://teams.microsoft.com/l/team/19%3aI3JomlRlssPCBQpKZNdAwT-K2Ukq-H97q0ZFkSqorq81%40thread.tacv2/conversations?groupId=43a31c80-c871-44e1-8a34-9a5b5d596a00&amp;tenantId=2fbd12a9-cbb9-49a2-9612-7af4096a6529">LP SDM Qualité des données 2021-2022</a> <b>Les étudiant-e-s doivent donc impérativement demander
-l'accès à cette équipe.</b> 
-</p>
+<ul class="org-ul">
+<li>Donner un aperçu des principales sources de données rencontrées aujourd'hui</li>
+<li>Présenter les librairies <code>Python</code> permettant de traiter les différentes sources présentées</li>
+<li>Expérimenter [TODO]</li>
+</ul>
 </div>
 </div>
 
-<div id="outline-container-orgab14d99" class="outline-2">
-<h2 id="orgab14d99"><span class="section-number-2">2</span> Sessions 2021-2022</h2>
+<div id="outline-container-org6182d7d" class="outline-2">
+<h2 id="org6182d7d"><span class="section-number-2">2</span> Environnement de travail</h2>
 <div class="outline-text-2" id="text-2">
+<p>
+Dans cette session, nous allons travailler sur <a href="https://deepnote.com/">Deepnote</a>. <a href="https://deepnote.com/">Deepnote</a> est une plateforme de
+développement collaborative en ligne reposant sur l'édition de <i>notebooks</i> (exactement comme
+<a href="https://colab.research.google.com/">Google Colab</a>.
+</p>
+
+<p>
+Avant de débuter le travail, veuillez à :
+</p>
 <ul class="org-ul">
-<li><a href="https://roland-donat.github.io/ubs-lpsdm-qualite-donnees/2021-2022/datatype/datatype_td.html">[TD =Python=] Traitements des sources de données usuelles</a></li>
+<li>vous inscrire sur <a href="https://deepnote.com/">Deepnote</a> ;</li>
+<li>créer un nouveau <i>notebook</i> que vous dédierez à cette séance ;</li>
+<li>prendre rapidement vos marques avec l'interface <a href="https://deepnote.com/">Deepnote</a>.</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org572b0ba" class="outline-2">
-<h2 id="org572b0ba"><span class="section-number-2">3</span> Sessions 2020-2021</h2>
+<div id="outline-container-orgc3602ff" class="outline-2">
+<h2 id="orgc3602ff"><span class="section-number-2">3</span> Rappel de la démarche de modélisation décisionnelle</h2>
 <div class="outline-text-2" id="text-3">
+
+<div class="figure">
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Minard.png/1920px-Minard.png" alt="demarche_modélisation" width="80%" />
+</p>
+<p><span class="figure-number">Figure&nbsp;2&nbsp;: </span>Bla bla</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org141f257" class="outline-2">
+<h2 id="org141f257"><span class="section-number-2">4</span> Fichiers tabulaires</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+Un fichier au format dit "tabulaire" est tout simplement un fichier dont les données peuvent se
+structurer sous la forme d'un tableau à double entrées.
+</p>
+
+<p>
+Le format tabulaire le plus utilisé est le format CSV (<i>Comma Separated Values</i>). Mais, d'autres
+  formats plus complexes existent comme le format Excel (<code>xlsx</code>) ou encore le format LibreOffice
+  (ODS, <i>Open Document Spreadsheet</i>).
+#+end_block-definition
+</p>
+</div>
+
+<div id="outline-container-org4f8c08a" class="outline-3">
+<h3 id="org4f8c08a"><span class="section-number-3">4.1</span> Format CSV</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+<b>Caractéristiques :</b>
+</p>
 <ul class="org-ul">
-<li><a href="https://roland-donat.github.io/cours-rb/stid_intro/stid_intro.html">Introduction aux réseaux bayésiens</a></li>
+<li>Format texte, i.e. lisible et éditable avec un éditeur de texte classique.</li>
+<li>Données séparées par un caractère de séparation (par défaut la virgule).</li>
 </ul>
+
+<p>
+<b>Traitements <code>Python</code> :</b>
+</p>
+<ul class="org-ul">
+<li>Utilisation de la librairie <code>Pandas</code>.</li>
+<li>Lecture des données avec <code>read_csv</code>.</li>
+<li>Écriture des données avec <code>to_csv</code>.</li>
+</ul>
+
+<p>
+<b>Exemple :</b>
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #F0DFAF; font-weight: bold;">import</span> pandas <span style="color: #F0DFAF; font-weight: bold;">as</span> pd
+
+<span style="color: #DFAF8F;">data_path</span> = <span style="color: #CC9393;">"https://roland-donat.github.io/ubs-lpmds-python/td/data/stadiums.csv"</span>
+<span style="color: #DFAF8F;">data</span> = pd.read_csv(data_path)
+data.head()
+</pre>
+</div>
+</div>
 </div>
 </div>
 </div>
