@@ -254,12 +254,13 @@ for the JavaScript code in this tag.
 <h2>Table des matières</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org92ef315">1. Objectif</a></li>
-<li><a href="#org6182d7d">2. Environnement de travail</a></li>
-<li><a href="#orgc3602ff">3. Rappel de la démarche de modélisation décisionnelle</a></li>
-<li><a href="#org141f257">4. Fichiers tabulaires</a>
+<li><a href="#org1ac7940">1. Objectif</a></li>
+<li><a href="#orge2e5d7d">2. Environnement de travail</a></li>
+<li><a href="#orgb9d7117">3. Rappel de la démarche de modélisation décisionnelle</a></li>
+<li><a href="#orgb3b70ea">4. Fichiers tabulaires</a>
 <ul>
-<li><a href="#org4f8c08a">4.1. Format CSV</a></li>
+<li><a href="#org2aad611">4.1. Format CSV</a></li>
+<li><a href="#org2daacdc">4.2. Format <code>xlsx</code></a></li>
 </ul>
 </li>
 </ul>
@@ -277,8 +278,8 @@ for the JavaScript code in this tag.
 </div>
 
 
-<div id="outline-container-org92ef315" class="outline-2">
-<h2 id="org92ef315"><span class="section-number-2">1</span> Objectif</h2>
+<div id="outline-container-org1ac7940" class="outline-2">
+<h2 id="org1ac7940"><span class="section-number-2">1</span> Objectif</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Ce TD a pour objectif de :
@@ -291,8 +292,8 @@ Ce TD a pour objectif de :
 </div>
 </div>
 
-<div id="outline-container-org6182d7d" class="outline-2">
-<h2 id="org6182d7d"><span class="section-number-2">2</span> Environnement de travail</h2>
+<div id="outline-container-orge2e5d7d" class="outline-2">
+<h2 id="orge2e5d7d"><span class="section-number-2">2</span> Environnement de travail</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Dans cette session, nous allons travailler sur <a href="https://deepnote.com/">Deepnote</a>. <a href="https://deepnote.com/">Deepnote</a> est une plateforme de
@@ -311,8 +312,8 @@ Avant de débuter le travail, veuillez à :
 </div>
 </div>
 
-<div id="outline-container-orgc3602ff" class="outline-2">
-<h2 id="orgc3602ff"><span class="section-number-2">3</span> Rappel de la démarche de modélisation décisionnelle</h2>
+<div id="outline-container-orgb9d7117" class="outline-2">
+<h2 id="orgb9d7117"><span class="section-number-2">3</span> Rappel de la démarche de modélisation décisionnelle</h2>
 <div class="outline-text-2" id="text-3">
 
 <div class="figure">
@@ -323,8 +324,8 @@ Avant de débuter le travail, veuillez à :
 </div>
 </div>
 
-<div id="outline-container-org141f257" class="outline-2">
-<h2 id="org141f257"><span class="section-number-2">4</span> Fichiers tabulaires</h2>
+<div id="outline-container-orgb3b70ea" class="outline-2">
+<h2 id="orgb3b70ea"><span class="section-number-2">4</span> Fichiers tabulaires</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 Un fichier au format dit "tabulaire" est tout simplement un fichier dont les données peuvent se
@@ -339,8 +340,8 @@ Le format tabulaire le plus utilisé est le format CSV (<i>Comma Separated Value
 </p>
 </div>
 
-<div id="outline-container-org4f8c08a" class="outline-3">
-<h3 id="org4f8c08a"><span class="section-number-3">4.1</span> Format CSV</h3>
+<div id="outline-container-org2aad611" class="outline-3">
+<h3 id="org2aad611"><span class="section-number-3">4.1</span> Format CSV</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 <b>Caractéristiques :</b>
@@ -365,11 +366,42 @@ Le format tabulaire le plus utilisé est le format CSV (<i>Comma Separated Value
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #F0DFAF; font-weight: bold;">import</span> pandas <span style="color: #F0DFAF; font-weight: bold;">as</span> pd
 
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Lecture</span>
 <span style="color: #DFAF8F;">data_path</span> = <span style="color: #CC9393;">"https://roland-donat.github.io/ubs-lpmds-python/td/data/stadiums.csv"</span>
 <span style="color: #DFAF8F;">data</span> = pd.read_csv(data_path)
-data.head()
+
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Modification</span>
+<span style="color: #DFAF8F;">data</span> = data.drop(columns=[<span style="color: #CC9393;">"Team"</span>])
+data.rename(columns={<span style="color: #CC9393;">"FDCOUK"</span>: <span style="color: #CC9393;">"Team ID"</span>}, inplace=<span style="color: #BFEBBF;">True</span>)
+
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">&#201;criture</span>
+data.to_csv(<span style="color: #CC9393;">"stadiums_new.csv"</span>)
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">&#201;criture</span>
+
 </pre>
 </div>
+</div>
+</div>
+
+<div id="outline-container-org2daacdc" class="outline-3">
+<h3 id="org2daacdc"><span class="section-number-3">4.2</span> Format <code>xlsx</code></h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+<b>Caractéristiques :</b>
+</p>
+<ul class="org-ul">
+<li>Format texte, i.e. lisible et éditable avec un éditeur de texte classique.</li>
+<li>Données séparées par un caractère de séparation (par défaut la virgule).</li>
+</ul>
+
+<p>
+<b>Traitements <code>Python</code> :</b>
+</p>
+<ul class="org-ul">
+<li>Utilisation de la librairie <code>Pandas</code>.</li>
+<li>Lecture des données avec <code>read_csv</code>.</li>
+<li>Écriture des données avec <code>to_csv</code>.</li>
+</ul>
 </div>
 </div>
 </div>
