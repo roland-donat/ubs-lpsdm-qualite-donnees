@@ -199,7 +199,7 @@
 <script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"></script>
 <script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"></script>
 <link rel="stylesheet" type="text/css" href="https://roland-donat.github.io/ubs/Charte_graphique/IUT/ubs_iut_vannes.css" />
-<link rel="stylesheet" type="text/css" href="https://roland-donat.github.io/ubs-lpmds-qualite-donnees/custom.css" />
+<link rel="stylesheet" type="text/css" href="https://roland-donat.github.io/ubs-lpsdm-qualite-donnees/custom.css" />
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -254,20 +254,20 @@ for the JavaScript code in this tag.
 <h2>Table des matières</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org8f691e2">1. Objectif</a></li>
-<li><a href="#orgc09b899">2. Environnement de travail</a></li>
-<li><a href="#orga2c117e">3. Rappel de la démarche de modélisation décisionnelle</a></li>
-<li><a href="#org9c72832">4. Fichiers tabulaires</a>
+<li><a href="#orgf23a924">1. Objectif</a></li>
+<li><a href="#orga9fc6f7">2. Environnement de travail</a></li>
+<li><a href="#org0f8f5da">3. Rappel de la démarche de modélisation décisionnelle</a></li>
+<li><a href="#orgb36dfee">4. Fichiers tabulaires</a>
 <ul>
-<li><a href="#org71642a2">4.1. Format CSV</a></li>
-<li><a href="#org717c095">4.2. Format <code>xlsx</code></a></li>
+<li><a href="#org4832d21">4.1. Format CSV</a></li>
+<li><a href="#orgc013a2f">4.2. Format <code>xlsx</code></a></li>
 </ul>
 </li>
-<li><a href="#orgb9d1cdf">5. Format <code>json</code></a></li>
-<li><a href="#orgc650d24">6. Format <code>YAML</code></a></li>
-<li><a href="#orge5da10e">7. Format <code>XML</code></a></li>
-<li><a href="#orgd5a9e4f">8. Connexion à une API REST</a></li>
-<li><a href="#org86541bc">9. <i>Web scraping</i></a></li>
+<li><a href="#org796705f">5. Format <code>json</code></a></li>
+<li><a href="#orga98ebc6">6. Format <code>YAML</code></a></li>
+<li><a href="#org5eca5af">7. Format <code>XML</code></a></li>
+<li><a href="#orga558d77">8. Connexion à une API REST</a></li>
+<li><a href="#org2ca52b9">9. <i>Web scraping</i></a></li>
 </ul>
 </div>
 </div>
@@ -283,8 +283,8 @@ for the JavaScript code in this tag.
 </div>
 
 
-<div id="outline-container-org8f691e2" class="outline-2">
-<h2 id="org8f691e2"><span class="section-number-2">1</span> Objectif</h2>
+<div id="outline-container-orgf23a924" class="outline-2">
+<h2 id="orgf23a924"><span class="section-number-2">1</span> Objectif</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Ce TD a pour objectif de :
@@ -297,8 +297,8 @@ Ce TD a pour objectif de :
 </div>
 </div>
 
-<div id="outline-container-orgc09b899" class="outline-2">
-<h2 id="orgc09b899"><span class="section-number-2">2</span> Environnement de travail</h2>
+<div id="outline-container-orga9fc6f7" class="outline-2">
+<h2 id="orga9fc6f7"><span class="section-number-2">2</span> Environnement de travail</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Dans cette session, nous allons travailler sur <a href="https://deepnote.com/">Deepnote</a>. <a href="https://deepnote.com/">Deepnote</a> est une plateforme de
@@ -317,8 +317,8 @@ Avant de débuter le travail, veuillez à :
 </div>
 </div>
 
-<div id="outline-container-orga2c117e" class="outline-2">
-<h2 id="orga2c117e"><span class="section-number-2">3</span> Rappel de la démarche de modélisation décisionnelle</h2>
+<div id="outline-container-org0f8f5da" class="outline-2">
+<h2 id="org0f8f5da"><span class="section-number-2">3</span> Rappel de la démarche de modélisation décisionnelle</h2>
 <div class="outline-text-2" id="text-3">
 
 <div class="figure">
@@ -329,8 +329,8 @@ Avant de débuter le travail, veuillez à :
 </div>
 </div>
 
-<div id="outline-container-org9c72832" class="outline-2">
-<h2 id="org9c72832"><span class="section-number-2">4</span> Fichiers tabulaires</h2>
+<div id="outline-container-orgb36dfee" class="outline-2">
+<h2 id="orgb36dfee"><span class="section-number-2">4</span> Fichiers tabulaires</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 Un fichier au format dit "tabulaire" est tout simplement un fichier dont les données peuvent se
@@ -345,8 +345,8 @@ Le format tabulaire le plus utilisé est le format CSV (<i>Comma Separated Value
 </p>
 </div>
 
-<div id="outline-container-org71642a2" class="outline-3">
-<h3 id="org71642a2"><span class="section-number-3">4.1</span> Format CSV</h3>
+<div id="outline-container-org4832d21" class="outline-3">
+<h3 id="org4832d21"><span class="section-number-3">4.1</span> Format CSV</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 <b>Caractéristiques :</b>
@@ -386,8 +386,8 @@ data.to_csv(<span style="color: #CC9393;">"stadiums_new.csv"</span>)
 </div>
 </div>
 
-<div id="outline-container-org717c095" class="outline-3">
-<h3 id="org717c095"><span class="section-number-3">4.2</span> Format <code>xlsx</code></h3>
+<div id="outline-container-orgc013a2f" class="outline-3">
+<h3 id="orgc013a2f"><span class="section-number-3">4.2</span> Format <code>xlsx</code></h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 <b>Caractéristiques :</b>
@@ -438,24 +438,24 @@ data.to_csv(<span style="color: #CC9393;">"stadiums_new.csv"</span>)
 </div>
 
 
-<div id="outline-container-orgb9d1cdf" class="outline-2">
-<h2 id="orgb9d1cdf"><span class="section-number-2">5</span> Format <code>json</code></h2>
+<div id="outline-container-org796705f" class="outline-2">
+<h2 id="org796705f"><span class="section-number-2">5</span> Format <code>json</code></h2>
 </div>
 
-<div id="outline-container-orgc650d24" class="outline-2">
-<h2 id="orgc650d24"><span class="section-number-2">6</span> Format <code>YAML</code></h2>
+<div id="outline-container-orga98ebc6" class="outline-2">
+<h2 id="orga98ebc6"><span class="section-number-2">6</span> Format <code>YAML</code></h2>
 </div>
 
-<div id="outline-container-orge5da10e" class="outline-2">
-<h2 id="orge5da10e"><span class="section-number-2">7</span> Format <code>XML</code></h2>
+<div id="outline-container-org5eca5af" class="outline-2">
+<h2 id="org5eca5af"><span class="section-number-2">7</span> Format <code>XML</code></h2>
 </div>
 
-<div id="outline-container-orgd5a9e4f" class="outline-2">
-<h2 id="orgd5a9e4f"><span class="section-number-2">8</span> Connexion à une API REST</h2>
+<div id="outline-container-orga558d77" class="outline-2">
+<h2 id="orga558d77"><span class="section-number-2">8</span> Connexion à une API REST</h2>
 </div>
 
-<div id="outline-container-org86541bc" class="outline-2">
-<h2 id="org86541bc"><span class="section-number-2">9</span> <i>Web scraping</i></h2>
+<div id="outline-container-org2ca52b9" class="outline-2">
+<h2 id="org2ca52b9"><span class="section-number-2">9</span> <i>Web scraping</i></h2>
 </div>
 </div>
 </body>
