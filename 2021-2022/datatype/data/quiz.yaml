@@ -1,0 +1,100 @@
+q01:
+  text: "Quelle heure est-il ?"
+  answers:
+    - text: "10h"
+      value: True
+    - text: "11h"
+      value: True
+    - text: "12h"
+      value: True
+    - text: "13h"
+      value: False
+    - text: "14h"
+      value: False
+
+nps:
+  text: Qu'est-ce que le NPS ? (plusieurs réponses possibles)
+  answers:
+    - text: un indicateur de recommandation client
+      value: True
+    - text: une étape de pré-traitement des données textuelles
+    - text: une méthode de vectorisation des mots
+
+lemma:
+  text: Parmi les transformations suivantes, lesquelles correspondent à une lemmatisation ? (plusieurs réponses possibles) 
+  answers:
+    - text: "'je peux' devient 'je pouvoir'"
+      value: True
+    - text: "'je voudrais' devient 'voudr'"
+    - text: "'animaux' devient 'anim'"
+    - text: "'tarif' devient 'tarif'"
+      value: True
+
+transfo:
+  text: Comment transformer une donnée textuelle en numérique ? (plusieurs réponses possibles)
+  answers:
+    - text: en effectuant une transformation Bag of Words
+      value: True
+    - text: en effectuant une transformation Bag of N-grams
+      value: True
+    - text: en effectuant une modélisation LDA
+    - text: en effectuant une modélisation Word2Vec
+      value: True
+
+word2vec:
+  text: "Word2Vec est : (plusieurs réponses possibles)"
+  answers:
+    - text: un algorithme de classification thématique de texte
+    - text: une méthode supervisée
+    - text: une méthode probabiliste
+    - text: un algorithme de plongement de mots
+      value: True
+
+lda:
+  text: "La LDA est : (plusieurs réponses possibles)"
+  answers:
+    - text: un algorithme de classification thématique de texte
+      value: True
+    - text: une méthode supervisée
+    - text: une méthode probabiliste
+      value: True
+    - text: un algorithme de plongement de mots
+
+lda_param:
+  text: Quel paramètre doit-on fixer avant une modélisation LDA ?
+  answers:
+    - text: le nombre minimal de mots à modéliser
+    - text: le nombre de thèmes du corpus textuel
+      value: True
+    - text: le nombre de mots représentant chaque thème
+
+theme:
+  text: Comment peut-on détecter les différents thèmes d'un corpus textuel ? (plusieurs réponses possibles)
+  answers:
+    - text: en effectuant une modélisation LDA
+      value: True
+    - text: en appliquant une régression linéaire sur les représentations vectorielles des mots
+    - text: en appliquant un algorithme k-means sur les représentations vectorielles des mots
+      value: True
+
+lexique_preform:
+  text: Quels sont les inconvénients de l'utilisation de lexiques préformés pour la modélisation de sentiments ? (plusieurs réponses possibles)
+  answers:
+    - text: ce sont des méthodes non supervisées
+    - text: les temps de traitement sont souvent plus longs qu'avec des lexiques auto-générés
+    - text: ils ne sont pas toujours adaptés au contexte d'étude
+      value: True
+    - text: il n'en existe pas en français
+
+appli_thema:
+  text: Quelles sont les applications métiers possibles d'une détection automatique de thématique et de sentiments ? (plusieurs réponses possibles)
+  answers:
+    - text: répondre rapidement aux critiques émises envers la marque sur les réseaux sociaux
+      value: True
+    - text: déterminer les sujets sensibles pour éviter une attrition
+      value: True
+    - text: ajuster les campagnes marketing en fonction de la typologie du client (e.g. age, situation familiale)
+      value: True
+    - text: mieux comprendre les attentes de ses clients
+      value: True
+
