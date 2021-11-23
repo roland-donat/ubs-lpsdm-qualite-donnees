@@ -254,22 +254,22 @@ for the JavaScript code in this tag.
 <h2>Table des matières</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org6cebff0">1. Objectif</a></li>
-<li><a href="#org4bc2907">2. Environnement de travail</a></li>
-<li><a href="#org430f4cd">3. Fichiers tabulaires</a>
+<li><a href="#orga86e3c3">1. Objectifs</a></li>
+<li><a href="#orgc75eef7">2. Environnement de travail</a></li>
+<li><a href="#org18bb326">3. Fichiers tabulaires</a>
 <ul>
-<li><a href="#org1705555">3.1. Format CSV</a></li>
-<li><a href="#org413f4c7">3.2. Format <code>xlsx</code></a></li>
+<li><a href="#org7ea129f">3.1. Format CSV</a></li>
+<li><a href="#orgf437d76">3.2. Format <code>xlsx</code></a></li>
 </ul>
 </li>
-<li><a href="#orgb3881fd">4. Format JSON</a></li>
-<li><a href="#orgf76620d">5. Format YAML</a></li>
-<li><a href="#org009a0a6">6. Format XML</a></li>
-<li><a href="#org5af58da">7. <i>Web scraping</i></a>
+<li><a href="#org4285b00">4. Format JSON</a></li>
+<li><a href="#orgb7cdd0f">5. Format YAML</a></li>
+<li><a href="#org8af6c3a">6. Format XML</a></li>
+<li><a href="#orge72eeae">7. <i>Web scraping</i></a>
 <ul>
-<li><a href="#orge8dd68d">7.1. Définition</a></li>
-<li><a href="#orgc3a0e30">7.2. Technique de <i>scraping</i> avec <code>Python</code></a></li>
-<li><a href="#org6617798">7.3. Exemple</a></li>
+<li><a href="#org578beb7">7.1. Définition</a></li>
+<li><a href="#org7704682">7.2. Technique de <i>scraping</i> avec <code>Python</code></a></li>
+<li><a href="#org690e872">7.3. Exemple</a></li>
 </ul>
 </li>
 </ul>
@@ -282,27 +282,24 @@ for the JavaScript code in this tag.
 
 
 <div class="figure">
-<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Minard.png/1920px-Minard.png" alt="Data dypes" width="80%" />
+<p><img src="https://imgs.xkcd.com/comics/convincing.png" alt="comics" width="80%" />
 </p>
 </div>
 
 
-<div id="outline-container-org6cebff0" class="outline-2">
-<h2 id="org6cebff0"><span class="section-number-2">1</span> Objectif</h2>
+<div id="outline-container-orga86e3c3" class="outline-2">
+<h2 id="orga86e3c3"><span class="section-number-2">1</span> Objectifs</h2>
 <div class="outline-text-2" id="text-1">
-<p>
-Ce TD a pour objectif de :
-</p>
-<ul class="org-ul">
-<li>Donner un aperçu des principales sources de données rencontrées aujourd'hui</li>
-<li>Présenter les librairies <code>Python</code> permettant de traiter les différentes sources présentées</li>
-<li>Expérimenter [TODO]</li>
-</ul>
+<ol class="org-ol">
+<li>Donner un aperçu des principaux formats de données usuels (hors bases de données).</li>
+<li>Présenter les librairies <code>Python</code> permettant de traiter ces différents formats.</li>
+<li>Présenter le concept de <i>web scraping</i>.</li>
+</ol>
 </div>
 </div>
 
-<div id="outline-container-org4bc2907" class="outline-2">
-<h2 id="org4bc2907"><span class="section-number-2">2</span> Environnement de travail</h2>
+<div id="outline-container-orgc75eef7" class="outline-2">
+<h2 id="orgc75eef7"><span class="section-number-2">2</span> Environnement de travail</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Dans cette session, nous allons travailler sur <a href="https://deepnote.com/">Deepnote</a>. <a href="https://deepnote.com/">Deepnote</a> est une plateforme de
@@ -321,8 +318,8 @@ Avant de débuter le travail, veuillez à :
 </div>
 </div>
 
-<div id="outline-container-org430f4cd" class="outline-2">
-<h2 id="org430f4cd"><span class="section-number-2">3</span> Fichiers tabulaires</h2>
+<div id="outline-container-org18bb326" class="outline-2">
+<h2 id="org18bb326"><span class="section-number-2">3</span> Fichiers tabulaires</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Un fichier au format dit "tabulaire" est tout simplement un fichier dont les données peuvent se
@@ -337,8 +334,8 @@ Le format tabulaire le plus utilisé est le format CSV (<i>Comma Separated Value
 </p>
 </div>
 
-<div id="outline-container-org1705555" class="outline-3">
-<h3 id="org1705555"><span class="section-number-3">3.1</span> Format CSV</h3>
+<div id="outline-container-org7ea129f" class="outline-3">
+<h3 id="org7ea129f"><span class="section-number-3">3.1</span> Format CSV</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 <b>Caractéristiques :</b>
@@ -379,8 +376,8 @@ data_csv.to_csv(<span style="color: #CC9393;">"stadiums_new.csv"</span>, index=<
 </div>
 </div>
 
-<div id="outline-container-org413f4c7" class="outline-3">
-<h3 id="org413f4c7"><span class="section-number-3">3.2</span> Format <code>xlsx</code></h3>
+<div id="outline-container-orgf437d76" class="outline-3">
+<h3 id="orgf437d76"><span class="section-number-3">3.2</span> Format <code>xlsx</code></h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 <b>Caractéristiques :</b>
@@ -458,8 +455,8 @@ data_xlsx_template.drop(columns=[col <span style="color: #F0DFAF; font-weight: b
 </div>
 </div>
 
-<div id="outline-container-orgb3881fd" class="outline-2">
-<h2 id="orgb3881fd"><span class="section-number-2">4</span> Format JSON</h2>
+<div id="outline-container-org4285b00" class="outline-2">
+<h2 id="org4285b00"><span class="section-number-2">4</span> Format JSON</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 <b>Caractéristiques :</b>
@@ -556,8 +553,8 @@ data_json[<span style="color: #CC9393;">"data"</span>][<span style="color: #CC93
 </div>
 </div>
 
-<div id="outline-container-orgf76620d" class="outline-2">
-<h2 id="orgf76620d"><span class="section-number-2">5</span> Format YAML</h2>
+<div id="outline-container-orgb7cdd0f" class="outline-2">
+<h2 id="orgb7cdd0f"><span class="section-number-2">5</span> Format YAML</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 <b>Caractéristiques :</b>
@@ -629,8 +626,8 @@ configuration.</li>
 </div>
 </div>
 
-<div id="outline-container-org009a0a6" class="outline-2">
-<h2 id="org009a0a6"><span class="section-number-2">6</span> Format XML</h2>
+<div id="outline-container-org8af6c3a" class="outline-2">
+<h2 id="org8af6c3a"><span class="section-number-2">6</span> Format XML</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 <b>Caractéristiques :</b>
@@ -748,12 +745,12 @@ mais s'avère extrêment pratique pour traiter les grands documents XML.</li>
 </div>
 </div>
 
-<div id="outline-container-org5af58da" class="outline-2">
-<h2 id="org5af58da"><span class="section-number-2">7</span> <i>Web scraping</i></h2>
+<div id="outline-container-orge72eeae" class="outline-2">
+<h2 id="orge72eeae"><span class="section-number-2">7</span> <i>Web scraping</i></h2>
 <div class="outline-text-2" id="text-7">
 </div>
-<div id="outline-container-orge8dd68d" class="outline-3">
-<h3 id="orge8dd68d"><span class="section-number-3">7.1</span> Définition</h3>
+<div id="outline-container-org578beb7" class="outline-3">
+<h3 id="org578beb7"><span class="section-number-3">7.1</span> Définition</h3>
 <div class="outline-text-3" id="text-7-1">
 <p>
 Le <i>web scraping</i> est l'art d'extraire des données depuis un site web. Cette technique permet de
@@ -779,8 +776,8 @@ d'accéder facilement aux données recherchées.</b>
 </div>
 </div>
 
-<div id="outline-container-orgc3a0e30" class="outline-3">
-<h3 id="orgc3a0e30"><span class="section-number-3">7.2</span> Technique de <i>scraping</i> avec <code>Python</code></h3>
+<div id="outline-container-org7704682" class="outline-3">
+<h3 id="org7704682"><span class="section-number-3">7.2</span> Technique de <i>scraping</i> avec <code>Python</code></h3>
 <div class="outline-text-3" id="text-7-2">
 <p>
 Les principales librairies <code>Python</code> permettant de faire du <i>web scraping</i> sont les suivantes :
@@ -799,14 +796,33 @@ de performances. Toutefois, <code>scrapy</code> est plus complexe à prendre en 
 </div>
 </div>
 
-<div id="outline-container-org6617798" class="outline-3">
-<h3 id="org6617798"><span class="section-number-3">7.3</span> Exemple</h3>
+<div id="outline-container-org690e872" class="outline-3">
+<h3 id="org690e872"><span class="section-number-3">7.3</span> Exemple</h3>
 <div class="outline-text-3" id="text-7-3">
 <p>
-Dans cet exemple, nous 
+Dans cet exemple, nous allons tenter d'extraire automatiquement les sujets postés sur le forum Morbihan du site du
+Routard : <a href="https://www.routard.com/forum_voyage/1511_morbihan_bretagne/60.htm">https://www.routard.com/forum_voyage/1511_morbihan_bretagne/60.htm</a>.
 </p>
 
+<p>
+Pour ce faire, nous utiliserons la librairie Beautiful Soup (<code>!pip install
+beautifulsoup4</code>). L'objectif final est de construire un DataFrame contenant les titres des sujets
+postés dans le forum avec leur auteur et la date du dernier message.
+</p>
 
+<p>
+Les grandes étapes du traitement sont les suivantes :
+</p>
+<ol class="org-ol">
+<li>Ouvrir la page web cible et analyser rapidement son code source afin de repérer où se situent les
+informations recherchées.</li>
+<li>Lire la page web avec Beautiful Soup.</li>
+<li>Extraire une liste d'éléments contenant les informations recherchées.</li>
+<li>En considérant uniquement le premier élément de la liste précédente, extraire le sujet, l'auteur
+et la date.</li>
+<li>Automatiser le processus pour récupérer toutes les informations souhaitées.</li>
+<li>Stocker le résultat final dans un DataFrame.</li>
+</ol>
 
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Import des modules</span>
