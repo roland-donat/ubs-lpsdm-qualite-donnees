@@ -246,6 +246,28 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
@@ -254,24 +276,29 @@ for the JavaScript code in this tag.
 <h2>Table des matières</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org0715549">1. Objectifs</a></li>
-<li><a href="#org3489c36">2. Environnement de travail</a></li>
-<li><a href="#org2a7bc99">3. Introduction sur les modèles de durée</a></li>
-<li><a href="#orgd4cd2ba">4. Chargement des données</a></li>
-<li><a href="#orgc36df89">5. Fichiers tabulaires</a>
+<li><a href="#org14c2013">1. Objectifs</a></li>
+<li><a href="#org3733902">2. Environnement de travail</a></li>
+<li><a href="#org5cd8ec6">3. Introduction sur les modèles de durée</a></li>
+<li><a href="#org2208c16">4. Données et objectif</a></li>
+<li><a href="#orge4d1872">5. Analyses descriptives</a>
 <ul>
-<li><a href="#orga9663ed">5.1. Format CSV</a></li>
-<li><a href="#org0d62998">5.2. Format <code>xlsx</code></a></li>
+<li><a href="#org895242a">5.1. Analyses univariées</a></li>
+<li><a href="#orge65e9bd">5.2. Analyses bivariées</a></li>
 </ul>
 </li>
-<li><a href="#orgf1f2b14">6. Format JSON</a></li>
-<li><a href="#org99c2281">7. Format YAML</a></li>
-<li><a href="#orged60af9">8. Format XML</a></li>
-<li><a href="#org09ce228">9. <i>Web scraping</i></a>
+<li><a href="#orgb1903a4">6. Définition de la notion de durée</a></li>
+<li><a href="#orgd407e3c">7. Modélisation non paramétrique</a>
 <ul>
-<li><a href="#org591182a">9.1. Définition</a></li>
-<li><a href="#orgdf2ad97">9.2. Technique de <i>scraping</i> avec <code>Python</code></a></li>
-<li><a href="#org5fa572e">9.3. Exemple</a></li>
+<li><a href="#orgc48081b">7.1. Fonction de répartition empirique (Kaplan-Meier)</a></li>
+<li><a href="#org1e621c4">7.2. Fonction de survie/fiabilité</a></li>
+<li><a href="#org854feb4">7.3. Taux de risque instantané</a></li>
+</ul>
+</li>
+<li><a href="#org55c5ec8">8. Modèle de Cox</a>
+<ul>
+<li><a href="#org95f2ddb">8.1. Éléments de théorie</a></li>
+<li><a href="#org3cbb363">8.2. Covariable quantitative</a></li>
+<li><a href="#orga91abac">8.3. Covariable qualitative</a></li>
 </ul>
 </li>
 </ul>
@@ -279,47 +306,39 @@ for the JavaScript code in this tag.
 </div>
 
 
-
-
-
-<p width="100%" alt="comics">
-<img src="https://imgs.xkcd.com/comics/convincing.png" alt="comics" width="100%" />
-<a href="https://xkcd.com/833/">Source de l'image</a>
-</p>
-
-<div id="outline-container-org0715549" class="outline-2">
-<h2 id="org0715549"><span class="section-number-2">1</span> Objectifs</h2>
+<div id="outline-container-org14c2013" class="outline-2">
+<h2 id="org14c2013"><span class="section-number-2">1</span> Objectifs</h2>
 <div class="outline-text-2" id="text-1">
 <ol class="org-ol">
-<li>Donner un aperçu des principaux formats de données usuels (hors bases de données).</li>
-<li>Présenter les librairies <code>Python</code> permettant de traiter ces différents formats.</li>
-<li>Présenter le concept de <i>web scraping</i>.</li>
+<li>Découvrir le principe des modèles de durée</li>
+<li>Savoir identifier les données adaptées à une analyse par modèles de durée.</li>
+<li>Comprendre quelques bases théoriques sur les modèles de durée.</li>
+<li>Présenter la librairie <code>Python</code> <code>lifeline</code> permettant d'utiliser les modèles de durée usuelles.</li>
 </ol>
 </div>
 </div>
 
-<div id="outline-container-org3489c36" class="outline-2">
-<h2 id="org3489c36"><span class="section-number-2">2</span> Environnement de travail</h2>
+<div id="outline-container-org3733902" class="outline-2">
+<h2 id="org3733902"><span class="section-number-2">2</span> Environnement de travail</h2>
 <div class="outline-text-2" id="text-2">
 <p>
-Dans cette session, nous allons travailler sur <a href="https://deepnote.com/">Deepnote</a>. <a href="https://deepnote.com/">Deepnote</a> est une plateforme de
+Dans cette session, nous allons travailler sur <a href="https://deepnote.com/">Deepnote</a> qui une plateforme de
 développement collaborative en ligne reposant sur l'édition de <i>notebooks</i> (exactement comme
-<a href="https://colab.research.google.com/">Google Colab</a>.
+<a href="https://colab.research.google.com/">Google Colab</a>).
 </p>
 
 <p>
 Avant de débuter le travail, veuillez à :
 </p>
 <ul class="org-ul">
-<li>vous inscrire sur <a href="https://deepnote.com/">Deepnote</a> ;</li>
-<li>créer un nouveau <i>notebook</i> que vous dédierez à cette séance ;</li>
-<li>prendre rapidement vos marques avec l'interface <a href="https://deepnote.com/">Deepnote</a>.</li>
+<li>vous inscrire sur <a href="https://deepnote.com/">Deepnote</a> (si ce n'est pas déjà fait);</li>
+<li>créer un nouveau <i>notebook</i> que vous dédierez à cette séance.</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org2a7bc99" class="outline-2">
-<h2 id="org2a7bc99"><span class="section-number-2">3</span> Introduction sur les modèles de durée</h2>
+<div id="outline-container-org5cd8ec6" class="outline-2">
+<h2 id="org5cd8ec6"><span class="section-number-2">3</span> Introduction sur les modèles de durée</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Dans ce TD, nous nous intéressons à l'analyse statistique de données relatives à l'occurrence d'un
@@ -327,7 +346,7 @@ Dans ce TD, nous nous intéressons à l'analyse statistique de données relative
 </p>
 <ul class="org-ul">
 <li>la durée de vie d'un patient atteint d'une maladie ;</li>
-<li>la durée d'un composant électronique avant une panne ;</li>
+<li>la durée d'un composant électronique avant une panne, on parle dans ce cas de fiabilité ;</li>
 <li>le quantité de chocolat avalée avant une indigestion ;</li>
 <li>le nombre de clics sur un site avant la réalisation d'une action particulière (e.g. un achat).</li>
 </ul>
@@ -359,14 +378,14 @@ assumé ;</li>
 </ul>
 
 <p>
-Dans ce TD, nous allons effleurer le monde des modèles de durée en travaillant sur des données de
+Dans ce TD, nous allons explorer brièvement le monde des modèles de durée en travaillant sur des données de
 fiabilité issues d'un parc de distributeurs de tickets.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgd4cd2ba" class="outline-2">
-<h2 id="orgd4cd2ba"><span class="section-number-2">4</span> Chargement des données</h2>
+<div id="outline-container-org2208c16" class="outline-2">
+<h2 id="org2208c16"><span class="section-number-2">4</span> Données et objectif</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 Les données utilisées dans ce TD contiennent un historique de durées et de sollicitations avant
@@ -379,10 +398,16 @@ d'une défaillance majeure caractérisée par les informations suivantes :
 <li><code>component</code> : Composant siège de la défaillance majeure. Valeurs possibles : <code>C01</code>, <code>C02</code>.</li>
 <li><code>nb_deg</code> : Nombre de pannes mineurs sur le distributeur entre deux pannes majeures du composant.</li>
 <li><code>nb_pm</code> : Nombre de maintenances préventives effectué sur le distributeur entre deux pannes du composant.</li>
-<li><code>ttf</code> : <i>Time To Failure</i>, temps en secondes entre deux défaillances majeures du composant.</li>
+<li><code>ttf</code> : <i>Time To Failure</i>, temps (en heures) entre deux défaillances majeures du composant.</li>
 <li><code>ctf</code> : <i>Cycle To Failue</i>, sollicitations du distributeur entre deux défaillances majeures du composant. Une sollicitation
 est définie comme une opération effectuée sur le distributeur.</li>
 </ul>
+
+<p>
+L'objectif de ce TD est d'étudier la durée de vie des composants <code>C01</code> et <code>C02</code> des
+distributeurs. D'un point de vue statistique, il s'agit d'étudier les variables <code>ttf</code> et <code>ctf</code> en
+fonction des caractéristiques des distributeurs.
+</p>
 
 <p>
 <b>Travail à réaliser :</b>
@@ -391,603 +416,464 @@ est définie comme une opération effectuée sur le distributeur.</li>
 <li>Charger les données dans votre notebook. Les données sont accessibles à l'adresse suivante : <a href="https://roland-donat.github.io/ubs-lpsdm-qualite-donnees/2021-2022/modeles_duree/data.csv">https://roland-donat.github.io/ubs-lpsdm-qualite-donnees/2021-2022/modeles_duree/data.csv</a>.</li>
 <li>Identifier les données qualitatives et quantitatives, puis convertir les données qualitatives en <code>category</code>.</li>
 </ol>
-
-<p>
-<b>Exemple :</b>
-</p>
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #F0DFAF; font-weight: bold;">import</span> pandas <span style="color: #F0DFAF; font-weight: bold;">as</span> pd
-
-<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Lecture</span>
-<span style="color: #DFAF8F;">data_csv_path</span> = <span style="color: #CC9393;">"https://roland-donat.github.io/ubs-lpsdm-qualite-donnees/2021-2022/modeles_duree/data.csv"</span>
-<span style="color: #DFAF8F;">data_csv</span> = pd.read_csv(data_csv_path)
-
-<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Modification</span>
-<span style="color: #DFAF8F;">data_csv</span> = data_csv.drop(columns=[<span style="color: #CC9393;">"Team"</span>])
-data_csv.rename(columns={<span style="color: #CC9393;">"FDCOUK"</span>: <span style="color: #CC9393;">"Team ID"</span>}, inplace=<span style="color: #BFEBBF;">True</span>)
-
-<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">&#201;criture</span>
-<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">index=False permet de ne pas sauvegarder l'index (nom des ligne)</span>
-data_csv.to_csv(<span style="color: #CC9393;">"stadiums_new.csv"</span>, index=<span style="color: #BFEBBF;">False</span>)
-</pre>
-</div>
-
-
-<p>
-On distingue l'évènement d'intérêt
-Décès du patient après l'apparition du cancer
-Pane du composant
-Fin de contrat du client
-de la variable à expliquer durée avant l'apparition de l'évènement
-temps écoulé avant le décès
-temps écoulé avant la panne
-temps écoulé avant la n du contrat
-</p>
 </div>
 </div>
 
 
-
-<div id="outline-container-orgc36df89" class="outline-2">
-<h2 id="orgc36df89"><span class="section-number-2">5</span> Fichiers tabulaires</h2>
+<div id="outline-container-orge4d1872" class="outline-2">
+<h2 id="orge4d1872"><span class="section-number-2">5</span> Analyses descriptives</h2>
 <div class="outline-text-2" id="text-5">
 <p>
-Un fichier au format dit "tabulaire" est tout simplement un fichier dont les données peuvent se
-structurer sous la forme d'un tableau à double entrées.
-</p>
-
-<p>
-Le format tabulaire le plus utilisé est le format CSV (<i>Comma Separated Values</i>). Mais, d'autres
-  formats plus complexes existent comme le format Excel (<code>xlsx</code>) ou encore le format LibreOffice
-  (ODS, <i>Open Document Spreadsheet</i>).
-#+end_block-definition
+Il s'agit ici de mieux comprendre les variations des variables <code>ttf</code> et <code>ctf</code> caractérisant la durée de vie
+des composants étudiés. Pour ce faire, nous allons effectuer des analyses graphiques univariées et
+bivariées avec la librairie <code>plotly.express</code>.
 </p>
 </div>
 
-<div id="outline-container-orga9663ed" class="outline-3">
-<h3 id="orga9663ed"><span class="section-number-3">5.1</span> Format CSV</h3>
+<div id="outline-container-org895242a" class="outline-3">
+<h3 id="org895242a"><span class="section-number-3">5.1</span> Analyses univariées</h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
-<b>Caractéristiques :</b>
-</p>
-<ul class="org-ul">
-<li>Format texte, i.e. lisible et éditable avec un éditeur de texte classique.</li>
-<li>Données séparées par un caractère de séparation (par défaut la virgule).</li>
-</ul>
-
-<p>
-<b>Traitements <code>Python</code> :</b>
-</p>
-<ul class="org-ul">
-<li>Utilisation de la librairie <code>Pandas</code>.</li>
-<li>Lecture des données avec la fonction <code>read_csv</code>.</li>
-<li>Écriture des données avec la méthode <code>to_csv</code>.</li>
-</ul>
-
-<p>
-<b>Exemple :</b>
-</p>
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #F0DFAF; font-weight: bold;">import</span> pandas <span style="color: #F0DFAF; font-weight: bold;">as</span> pd
-
-<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Lecture</span>
-<span style="color: #DFAF8F;">data_csv_path</span> = <span style="color: #CC9393;">"https://roland-donat.github.io/ubs-lpsdm-qualite-donnees/2021-2022/datatype/data/stadiums.csv"</span>
-<span style="color: #DFAF8F;">data_csv</span> = pd.read_csv(data_csv_path)
-
-<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Modification</span>
-<span style="color: #DFAF8F;">data_csv</span> = data_csv.drop(columns=[<span style="color: #CC9393;">"Team"</span>])
-data_csv.rename(columns={<span style="color: #CC9393;">"FDCOUK"</span>: <span style="color: #CC9393;">"Team ID"</span>}, inplace=<span style="color: #BFEBBF;">True</span>)
-
-<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">&#201;criture</span>
-<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">index=False permet de ne pas sauvegarder l'index (nom des ligne)</span>
-data_csv.to_csv(<span style="color: #CC9393;">"stadiums_new.csv"</span>, index=<span style="color: #BFEBBF;">False</span>)
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org0d62998" class="outline-3">
-<h3 id="org0d62998"><span class="section-number-3">5.2</span> Format <code>xlsx</code></h3>
-<div class="outline-text-3" id="text-5-2">
-<p>
-<b>Caractéristiques :</b>
-</p>
-<ul class="org-ul">
-<li>Format natif Microsoft Excel, i.e. lisible et éditable avec les principaux tableurs (Excel,
-LibreOffice, Google Sheets, etc.)</li>
-<li>Format contenant, en plus des données, des informations sur les types des valeurs (nombre, date,
-chaîne) et de la mise en forme visuelle.</li>
-<li>En pratique le format <code>xslx</code> s'appuie sur le format <code>XML</code>.</li>
-</ul>
-
-<p>
-<b>Traitements <code>Python</code> :</b>
-</p>
-<ul class="org-ul">
-<li>Utilisation de la librairie <code>Pandas</code>.
-<ul class="org-ul">
-<li>lecture des données avec la fonction <code>read_excel</code> ;</li>
-<li>écriture des données avec la méthode <code>to_excel</code>.</li>
-</ul></li>
-<li>La librairie <code>openpyxl</code> doit être installée (<code>!pip install openpyxl</code>) pour ouvrir un fichier
-<code>xlsx</code> avec <code>Pandas</code>.</li>
-<li>La librairie <code>xlrd</code> doit être installée (<code>!pip install xlrd</code>) pour ouvrir un fichier
-<code>xls</code> (ancien format Excel) avec <code>Pandas</code>.</li>
-</ul>
-
-<p>
-<b>Exemple 1 : lecture/écriture basique</b>
-</p>
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #F0DFAF; font-weight: bold;">import</span> pandas <span style="color: #F0DFAF; font-weight: bold;">as</span> pd
-
-<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Lecture</span>
-<span style="color: #DFAF8F;">data_xlsx_path</span> = <span style="color: #CC9393;">"https://roland-donat.github.io/ubs-lpsdm-qualite-donnees/2021-2022/datatype/data/myco.xlsx"</span>
-<span style="color: #DFAF8F;">data_xlsx</span> = pd.read_excel(data_xlsx_path)
-
-<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Nettoyage</span>
-data_xlsx.drop(columns=[col <span style="color: #F0DFAF; font-weight: bold;">for</span> col <span style="color: #F0DFAF; font-weight: bold;">in</span> data_xlsx.columns \
-<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #F0DFAF; font-weight: bold;">if</span> col.startswith(<span style="color: #CC9393;">"Unnamed"</span>)], inplace=<span style="color: #BFEBBF;">True</span>)
-
-<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">&#201;criture</span>
-data_xlsx.to_excel(<span style="color: #CC9393;">"myco_template.xlsx"</span>, index=<span style="color: #BFEBBF;">False</span>)  
-</pre>
-</div>
-
-<p>
-<b>Exemple 2 : lecture de tous les onglets du fichier</b>
-</p>
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #F0DFAF; font-weight: bold;">import</span> pandas <span style="color: #F0DFAF; font-weight: bold;">as</span> pd
-
-<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Lecture</span>
-<span style="color: #DFAF8F;">data_xlsx_path</span> = <span style="color: #CC9393;">"https://roland-donat.github.io/ubs-lpsdm-qualite-donnees/2021-2022/datatype/data/myco.xlsx"</span>
-<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Le r&#233;sultat est un dictionnaire de DataFrames (un DataFrame par onglet)</span>
-<span style="color: #DFAF8F;">data_xlsx_all</span> = pd.read_excel(data_xlsx_path, sheet_name=<span style="color: #BFEBBF;">None</span>)
-
-<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Acc&#232;s &#224; l'onglet "Template"</span>
-<span style="color: #DFAF8F;">data_xlsx_template</span> = data_xlsx_all[<span style="color: #CC9393;">"Template"</span>]
-data_xlsx_template.drop(columns=[col <span style="color: #F0DFAF; font-weight: bold;">for</span> col <span style="color: #F0DFAF; font-weight: bold;">in</span> data_xlsx_template.columns \
-<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span><span style="color: #F0DFAF; font-weight: bold;">if</span> col.startswith(<span style="color: #CC9393;">"Unnamed"</span>)], inplace=<span style="color: #BFEBBF;">True</span>)
-</pre>
-</div>
-
-<p>
-<b>Exemple 2 (suite): Écriture dans plusieurs onglets</b>
-</p>
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #F0DFAF; font-weight: bold;">with</span> pd.ExcelWriter(<span style="color: #CC9393;">'myco_stadiums.xlsx'</span>) <span style="color: #F0DFAF; font-weight: bold;">as</span> writer:
-<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   data_xlsx_template.to_excel(writer, sheet_name=<span style="color: #CC9393;">'myco'</span>)
-<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   data_csv.to_excel(writer, sheet_name=<span style="color: #CC9393;">'stadiums'</span>)
-</pre>
-</div>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgf1f2b14" class="outline-2">
-<h2 id="orgf1f2b14"><span class="section-number-2">6</span> Format JSON</h2>
-<div class="outline-text-2" id="text-6">
-<p>
-<b>Caractéristiques :</b>
-</p>
-<ul class="org-ul">
-<li>Le format JSON (<i>JavaScript Object Notation</i>) est un format d'échange de données dont la syntaxe
-s'inspire des objets du langage <code>JavaScript</code>.</li>
-<li>Sa simplicité et son expressivité ont fait de JSON un des standard d'échange de données les plus
-utilisés à l'heure actuelle.</li>
-<li>Le format JSON peut représenter des nombres, des booléens, des chaînes, la valeur <code>null</code>, des
-séquences de valeurs ordonnées, des objets, etc.</li>
-<li>Le format s'articule autour de deux structures de données élémentaires :
-<ul class="org-ul">
-<li>les collections de paires clé/valeur, très similaires aux dictionnaires <code>Python</code> ;</li>
-<li>les liste ordonnée de valeurs, très similaires aux listes <code>Python</code>.</li>
-</ul></li>
-</ul>
-
-<p>
-<b>Exemple de données JSON :</b>
-</p>
-<div class="org-src-container">
-<pre class="src src-python">{
-<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span> <span style="color: #CC9393;">"data"</span>: [
-<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   {
-<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span> <span style="color: #CC9393;">"name"</span>: <span style="color: #CC9393;">"Banane"</span>,
-<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span> <span style="color: #CC9393;">"price"</span>: 5.99,
-<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span> <span style="color: #CC9393;">"code"</span>: 77
-<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   },
-<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   {
-<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span> <span style="color: #CC9393;">"name"</span>: <span style="color: #CC9393;">"Pomme"</span>,
-<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span> <span style="color: #CC9393;">"price"</span>: 2.99,
-<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span> <span style="color: #CC9393;">"code"</span>: 99
-<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   },
-<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   {
-<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span> <span style="color: #CC9393;">"name"</span>: <span style="color: #CC9393;">"Poire"</span>,
-<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span> <span style="color: #CC9393;">"price"</span>: 7.99,
-<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span> <span style="color: #CC9393;">"code"</span>: 170
-<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   }
-<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span> ]
-}
-</pre>
-</div>
-
-<p>
-<b>Traitements <code>Python</code> :</b>
-</p>
-<ul class="org-ul">
-<li>Utilisation du module <code>json</code>.
-<ul class="org-ul">
-<li>lecture des données avec la fonction <code>load</code> ;</li>
-<li>écriture des données avec la fonction <code>dump</code>.</li>
-</ul></li>
-<li>Manipulation des données :
-<ul class="org-ul">
-<li>sous forme de dictionnaire ;</li>
-<li>avec <code>Pandas</code> si les données sont compatibles avec le format tabulaire.</li>
-</ul></li>
-</ul>
-
-<p>
-<b>Exemple :</b>
-</p>
-<ul class="org-ul">
-<li>Télécharger le fichier <a href="https://roland-donat.github.io/ubs-lpsdm-qualite-donnees/2021-2022/datatype/data/station_status.json">station_status.json</a> sur votre poste.</li>
-<li>Importer le fichier par glisser-déposer dans votre environnement Deepnote.</li>
-</ul>
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #F0DFAF; font-weight: bold;">import</span> json
-<span style="color: #F0DFAF; font-weight: bold;">import</span> pandas <span style="color: #F0DFAF; font-weight: bold;">as</span> pd
-
-<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Lecture des donn&#233;es sous la forme d'un dictionnaire</span>
-<span style="color: #DFAF8F;">data_json_path</span> = <span style="color: #CC9393;">"station_status.json"</span>
-<span style="color: #F0DFAF; font-weight: bold;">with</span> <span style="color: #DCDCCC; font-weight: bold;">open</span>(data_json_path, <span style="color: #CC9393;">'r'</span>) <span style="color: #F0DFAF; font-weight: bold;">as</span> json_file:
-<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DFAF8F;">data_json</span> = json.load(json_file)
-
-<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Conversion de la partie `data/stations` en DataFrame pour traitements</span>
-<span style="color: #DFAF8F;">stations_df</span> = pd.DataFrame(data_json[<span style="color: #CC9393;">"data"</span>][<span style="color: #CC9393;">"stations"</span>])
-
-<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Conversion de l'instant de mise &#224; jour (en secondes) en date </span>
-<span style="color: #DFAF8F;">stations_df</span>[<span style="color: #CC9393;">"last_reported_dt"</span>] = \
-<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   pd.to_datetime(stations_df[<span style="color: #CC9393;">"last_reported"</span>], unit=<span style="color: #CC9393;">"s"</span>)\
-<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span> .astype(<span style="color: #DCDCCC; font-weight: bold;">str</span>)
-
-<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Mise &#224; jour du dictionnaire de donn&#233;es initial avec les nouvelles donn&#233;es</span>
-data_json[<span style="color: #CC9393;">"data"</span>][<span style="color: #CC9393;">"stations"</span>] = stations_df.to_dict(<span style="color: #CC9393;">"records"</span>)
-
-<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">&#201;criture du dictionnaire mis &#224; jour sous forme de fichier json</span>
-<span style="color: #DFAF8F;">data_json_bis_path</span> = <span style="color: #CC9393;">"station_status_bis.json"</span>
-<span style="color: #F0DFAF; font-weight: bold;">with</span> <span style="color: #DCDCCC; font-weight: bold;">open</span>(data_json_bis_path, <span style="color: #CC9393;">'w'</span>) <span style="color: #F0DFAF; font-weight: bold;">as</span> json_file:
-<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   json.dump(data_json, json_file)
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org99c2281" class="outline-2">
-<h2 id="org99c2281"><span class="section-number-2">7</span> Format YAML</h2>
-<div class="outline-text-2" id="text-7">
-<p>
-<b>Caractéristiques :</b>
-</p>
-
-<ul class="org-ul">
-<li>YAML (<i>YAML Ain't Markup Language</i>) est un format de représentation de données.</li>
-<li>YAML s'inspire des concepts d'autres formats comme JSON ou XML.</li>
-<li>L'objectif du format est de représenter des informations complexes en conservant une certaine
-lisibilité.</li>
-<li>Le format JSON est inclus dans le format YAML, i.e. tout fichier JSON peut être converti en
-fichier YAML sans perte d'information, l'inverse n'est pas possible.</li>
-<li>Sa simplicité et sa lisibilité font de YAML le standard actuel pour l'écriture des fichiers de
-configuration.</li>
-<li>La hiérarchie de la structure de données est assurée par une indentation homogène (comme en
-<code>Python</code>)</li>
-</ul>
-
-<p>
-<b>Exemple de données YAML :</b>
-</p>
-<div class="org-src-container">
-<pre class="src src-yaml"><span style="color: #DFAF8F;">data</span>:
-  - <span style="color: #DFAF8F;">name</span>: Banane
-    <span style="color: #DFAF8F;">price</span>: 5.99
-    <span style="color: #DFAF8F;">code</span>: 77
-  - <span style="color: #DFAF8F;">name</span>: Pomme
-    <span style="color: #DFAF8F;">price</span>: 2.99
-    <span style="color: #DFAF8F;">code</span>: 99
-  - <span style="color: #DFAF8F;">name</span>: Poire
-    <span style="color: #DFAF8F;">price</span>: 7.99
-    <span style="color: #DFAF8F;">code</span>: 170
-</pre>
-</div>
-
-<p>
-<b>Traitements <code>Python</code> :</b>
-</p>
-<ul class="org-ul">
-<li>Utilisation du module <code>pyyaml</code> (<code>!pip install pyyaml</code>).
-<ul class="org-ul">
-<li>lecture des données avec la fonction <code>load</code> ;</li>
-<li>écriture des données avec la fonction <code>dump</code>.</li>
-</ul></li>
-<li>Manipulation des données :
-<ul class="org-ul">
-<li>sous forme de dictionnaire ;</li>
-<li>avec <code>Pandas</code> si les données sont compatibles avec le format tabulaire.</li>
-</ul></li>
-</ul>
-
-<p>
-<b>Exemple :</b>
-</p>
-<ul class="org-ul">
-<li>Télécharger le fichier <a href="https://roland-donat.github.io/ubs-lpsdm-qualite-donnees/2021-2022/datatype/data/quiz.yaml">quiz.yaml</a> sur votre poste.</li>
-<li>Importer le fichier par glisser-déposer dans votre environnement Deepnote.</li>
-</ul>
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #F0DFAF; font-weight: bold;">import</span> yaml
-<span style="color: #F0DFAF; font-weight: bold;">import</span> pandas <span style="color: #F0DFAF; font-weight: bold;">as</span> pd
-
-<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Lecture des donn&#233;es sous la forme d'un dictionnaire</span>
-<span style="color: #DFAF8F;">data_yaml_path</span> = <span style="color: #CC9393;">"quiz.yaml"</span>
-<span style="color: #F0DFAF; font-weight: bold;">with</span> <span style="color: #DCDCCC; font-weight: bold;">open</span>(data_yaml_path, <span style="color: #CC9393;">'r'</span>) <span style="color: #F0DFAF; font-weight: bold;">as</span> yaml_file:
-<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DFAF8F;">data_yaml</span> = yaml.load(yaml_file, Loader=yaml.SafeLoader)
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orged60af9" class="outline-2">
-<h2 id="orged60af9"><span class="section-number-2">8</span> Format XML</h2>
-<div class="outline-text-2" id="text-8">
-<p>
-<b>Caractéristiques :</b>
-</p>
-<ul class="org-ul">
-<li>Le langage XML (<i>eXtended Markup Language</i>) est un format général de documents orienté texte.</li>
-<li>Le langage XML est un langage orienté texte et formé de balises permettant d'organiser des données de manière structurée.</li>
-<li>Le format XML est utilisé pour le stockage de document ainsi que pour la transmission de données
-entre applications (bien que supplanté par le format JSON aujourd'hui).</li>
-<li>Le langage XML dérive de SGML (<i>Standard Generalized Markup Language</i>) et de HTML (<i>HyperText
-Markup Language</i>).</li>
-</ul>
-
-<p>
-<b>Exemple de données XML :</b>
-</p>
-<div class="org-src-container">
-<pre class="src src-xml">&lt;<span style="color: #93E0E3;">pdv_liste</span>&gt;
-  &lt;<span style="color: #93E0E3;">pdv</span> <span style="color: #DFAF8F;">id</span>=<span style="color: #CC9393;">"1000001"</span> <span style="color: #DFAF8F;">latitude</span>=<span style="color: #CC9393;">"4620114"</span> <span style="color: #DFAF8F;">longitude</span>=<span style="color: #CC9393;">"519791"</span> <span style="color: #DFAF8F;">cp</span>=<span style="color: #CC9393;">"01000"</span> <span style="color: #DFAF8F;">pop</span>=<span style="color: #CC9393;">"R"</span>&gt;
-    &lt;<span style="color: #93E0E3;">adresse</span>&gt;596 AVENUE DE TREVOUX&lt;/<span style="color: #93E0E3;">adresse</span>&gt;
-    &lt;<span style="color: #93E0E3;">ville</span>&gt;SAINT-DENIS-L&#232;S-BOURG&lt;/<span style="color: #93E0E3;">ville</span>&gt;
-    &lt;<span style="color: #93E0E3;">services</span>&gt;
-      &lt;<span style="color: #93E0E3;">service</span>&gt;Station de gonflage&lt;/<span style="color: #93E0E3;">service</span>&gt;
-      &lt;<span style="color: #93E0E3;">service</span>&gt;Vente de gaz domestique (Butane, Propane)&lt;/<span style="color: #93E0E3;">service</span>&gt;
-      &lt;<span style="color: #93E0E3;">service</span>&gt;DAB (Distributeur automatique de billets)&lt;/<span style="color: #93E0E3;">service</span>&gt;
-    &lt;/<span style="color: #93E0E3;">services</span>&gt;
-    &lt;<span style="color: #93E0E3;">prix</span> <span style="color: #DFAF8F;">nom</span>=<span style="color: #CC9393;">"Gazole"</span> <span style="color: #DFAF8F;">id</span>=<span style="color: #CC9393;">"1"</span> <span style="color: #DFAF8F;">maj</span>=<span style="color: #CC9393;">"2021-11-19T10:00:41"</span> <span style="color: #DFAF8F;">valeur</span>=<span style="color: #CC9393;">"1524"</span>/&gt;
-    &lt;<span style="color: #93E0E3;">prix</span> <span style="color: #DFAF8F;">nom</span>=<span style="color: #CC9393;">"SP95"</span> <span style="color: #DFAF8F;">id</span>=<span style="color: #CC9393;">"2"</span> <span style="color: #DFAF8F;">maj</span>=<span style="color: #CC9393;">"2021-11-19T10:00:41"</span> <span style="color: #DFAF8F;">valeur</span>=<span style="color: #CC9393;">"1616"</span>/&gt;
-    &lt;<span style="color: #93E0E3;">prix</span> <span style="color: #DFAF8F;">nom</span>=<span style="color: #CC9393;">"SP98"</span> <span style="color: #DFAF8F;">id</span>=<span style="color: #CC9393;">"6"</span> <span style="color: #DFAF8F;">maj</span>=<span style="color: #CC9393;">"2021-11-19T10:00:41"</span> <span style="color: #DFAF8F;">valeur</span>=<span style="color: #CC9393;">"1660"</span>/&gt;
-    &lt;<span style="color: #93E0E3;">rupture</span> <span style="color: #DFAF8F;">id</span>=<span style="color: #CC9393;">"4"</span> <span style="color: #DFAF8F;">nom</span>=<span style="color: #CC9393;">"GPLc"</span> <span style="color: #DFAF8F;">debut</span>=<span style="color: #CC9393;">"2017-09-16T09:50:23"</span> <span style="color: #DFAF8F;">fin</span>=<span style="color: #CC9393;">""</span>/&gt;
-    &lt;<span style="color: #93E0E3;">rupture</span> <span style="color: #DFAF8F;">id</span>=<span style="color: #CC9393;">"3"</span> <span style="color: #DFAF8F;">nom</span>=<span style="color: #CC9393;">"E85"</span> <span style="color: #DFAF8F;">debut</span>=<span style="color: #CC9393;">"2017-09-16T09:50:23"</span> <span style="color: #DFAF8F;">fin</span>=<span style="color: #CC9393;">""</span>/&gt;
-    &lt;<span style="color: #93E0E3;">rupture</span> <span style="color: #DFAF8F;">id</span>=<span style="color: #CC9393;">"5"</span> <span style="color: #DFAF8F;">nom</span>=<span style="color: #CC9393;">"E10"</span> <span style="color: #DFAF8F;">debut</span>=<span style="color: #CC9393;">"2018-12-13T09:49:49"</span> <span style="color: #DFAF8F;">fin</span>=<span style="color: #CC9393;">""</span>/&gt;
-  &lt;/<span style="color: #93E0E3;">pdv</span>&gt;
-  &lt;<span style="color: #93E0E3;">pdv</span> <span style="color: #DFAF8F;">id</span>=<span style="color: #CC9393;">"1000002"</span> <span style="color: #DFAF8F;">latitude</span>=<span style="color: #CC9393;">"4621842"</span> <span style="color: #DFAF8F;">longitude</span>=<span style="color: #CC9393;">"522767"</span> <span style="color: #DFAF8F;">cp</span>=<span style="color: #CC9393;">"01000"</span> <span style="color: #DFAF8F;">pop</span>=<span style="color: #CC9393;">"R"</span>&gt;
-    &lt;<span style="color: #93E0E3;">adresse</span>&gt;16 Avenue de Marboz&lt;/<span style="color: #93E0E3;">adresse</span>&gt;
-    &lt;<span style="color: #93E0E3;">ville</span>&gt;BOURG-EN-BRESSE&lt;/<span style="color: #93E0E3;">ville</span>&gt;
-    &lt;<span style="color: #93E0E3;">services</span>&gt;
-      &lt;<span style="color: #93E0E3;">service</span>&gt;Vente de gaz domestique (Butane, Propane)&lt;/<span style="color: #93E0E3;">service</span>&gt;
-      &lt;<span style="color: #93E0E3;">service</span>&gt;DAB (Distributeur automatique de billets)&lt;/<span style="color: #93E0E3;">service</span>&gt;
-    &lt;/<span style="color: #93E0E3;">services</span>&gt;
-    &lt;<span style="color: #93E0E3;">prix</span> <span style="color: #DFAF8F;">nom</span>=<span style="color: #CC9393;">"Gazole"</span> <span style="color: #DFAF8F;">id</span>=<span style="color: #CC9393;">"1"</span> <span style="color: #DFAF8F;">maj</span>=<span style="color: #CC9393;">"2021-11-18T15:00:57"</span> <span style="color: #DFAF8F;">valeur</span>=<span style="color: #CC9393;">"1527"</span>/&gt;
-    &lt;<span style="color: #93E0E3;">prix</span> <span style="color: #DFAF8F;">nom</span>=<span style="color: #CC9393;">"SP95"</span> <span style="color: #DFAF8F;">id</span>=<span style="color: #CC9393;">"2"</span> <span style="color: #DFAF8F;">maj</span>=<span style="color: #CC9393;">"2021-11-18T15:00:58"</span> <span style="color: #DFAF8F;">valeur</span>=<span style="color: #CC9393;">"1631"</span>/&gt;
-    &lt;<span style="color: #93E0E3;">prix</span> <span style="color: #DFAF8F;">nom</span>=<span style="color: #CC9393;">"SP98"</span> <span style="color: #DFAF8F;">id</span>=<span style="color: #CC9393;">"6"</span> <span style="color: #DFAF8F;">maj</span>=<span style="color: #CC9393;">"2021-11-18T15:00:58"</span> <span style="color: #DFAF8F;">valeur</span>=<span style="color: #CC9393;">"1670"</span>/&gt;
-    &lt;<span style="color: #93E0E3;">rupture</span> <span style="color: #DFAF8F;">id</span>=<span style="color: #CC9393;">"3"</span> <span style="color: #DFAF8F;">nom</span>=<span style="color: #CC9393;">"E85"</span> <span style="color: #DFAF8F;">debut</span>=<span style="color: #CC9393;">"2017-09-07T11:05:59"</span> <span style="color: #DFAF8F;">fin</span>=<span style="color: #CC9393;">""</span>/&gt;
-    &lt;<span style="color: #93E0E3;">rupture</span> <span style="color: #DFAF8F;">id</span>=<span style="color: #CC9393;">"4"</span> <span style="color: #DFAF8F;">nom</span>=<span style="color: #CC9393;">"GPLc"</span> <span style="color: #DFAF8F;">debut</span>=<span style="color: #CC9393;">"2017-09-07T11:05:59"</span> <span style="color: #DFAF8F;">fin</span>=<span style="color: #CC9393;">""</span>/&gt;
-    &lt;<span style="color: #93E0E3;">rupture</span> <span style="color: #DFAF8F;">id</span>=<span style="color: #CC9393;">"5"</span> <span style="color: #DFAF8F;">nom</span>=<span style="color: #CC9393;">"E10"</span> <span style="color: #DFAF8F;">debut</span>=<span style="color: #CC9393;">"2017-09-07T11:05:59"</span> <span style="color: #DFAF8F;">fin</span>=<span style="color: #CC9393;">""</span>/&gt;
-  &lt;/<span style="color: #93E0E3;">pdv</span>&gt;
-&lt;/<span style="color: #93E0E3;">pdv_liste</span>&gt;
-</pre>
-</div>
-<ul class="org-ul">
-<li>Un document XML est composé de noeuds définis sous la forme de balise <code>&lt;nom_du_noeud&gt; ... contenu
-  ... &lt;/nom_du_noeud&gt;</code> ou <code>&lt;nom_du_noeud/&gt;</code> si ce dernier ne possède pas de contenu.</li>
-<li>Le contenu d'un noeud peut être du texte (ou des valeurs numériques qui seront interprétées comme
-du texte) ou d'autres noeuds.</li>
-<li>Un noeud peut également avoir des attributs définis sous la forme de clés/valeurs placés au niveau
-de la balise d'ouverture du noeud.</li>
-<li>Exemple : le noeud <code>&lt;prix nom="Gazole" id="1" maj="2021-11-18T15:00:57" valeur="1527"/&gt;</code> possèdent
-4 attributs <code>nom</code>, <code>id</code>, <code>maj</code> et <code>valeur</code> mais ne possède pas de contenu.</li>
-</ul>
-
-
-
-<p>
-<b>Traitements <code>Python</code> :</b>
-</p>
-<ul class="org-ul">
-<li>Utilisation du module <code>lxml</code> (<code>!pip install lxml</code>).</li>
-<li>La lecture des données est réalisée sous la forme d'un parcours du document (on parle de
-<i>parsing</i>) en suivant sa
-structure hiérarchique arborescente (objet <a href="https://lxml.de/tutorial.html"><code>etree</code></a>).</li>
-<li>En général, on ne cherche pas à stocker entièrement le contenu du fichier XML dans une structure
-<code>Python</code>.</li>
-<li>La démarche usuelle consiste à extraire du document uniquement les informations importantes afin
-de les traiter ultérieurement <i>via</i> des structures <code>Python</code> classiques (dictionnaires, DataFrames,
-etc).</li>
-<li>La recherche des données pertinentes dans la structure XML peut s'effectuer avec la méthode
-<a href="https://python.doctor/page-xml-python-xpath"><code>.xpath</code></a>. À noter que XPath (<i>XML Path Language</i>) est un langage de requête permettant d'extraire
-des éléments d'un document XML. Ce langage peut paraître relativement complexe au premier abord
-mais s'avère extrêment pratique pour traiter les grands documents XML.</li>
-</ul>
-
-<p>
-<b>Exemple :</b>
-</p>
-<ul class="org-ul">
-<li>Télécharger le fichier <a href="https://roland-donat.github.io/ubs-lpsdm-qualite-donnees/2021-2022/datatype/data/prix_carburant.xml">prix_carburant.xml</a> sur votre poste
-(<a href="https://www.data.gouv.fr/fr/datasets/prix-des-carburants-en-france/">Source : data.gouv.fr</a>).</li>
-<li>Importer le fichier par glisser-déposer dans votre environnement Deepnote.</li>
-<li>Objectif : calculer le prix moyen du gazole.</li>
-</ul>
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #F0DFAF; font-weight: bold;">from</span> lxml <span style="color: #F0DFAF; font-weight: bold;">import</span> etree
-<span style="color: #F0DFAF; font-weight: bold;">import</span> pandas <span style="color: #F0DFAF; font-weight: bold;">as</span> pd
-
-<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Lecture du fichier XML dans un objet etree</span>
-<span style="color: #DFAF8F;">data_xml_path</span> = <span style="color: #CC9393;">"prix_carburant.xml"</span>
-<span style="color: #DFAF8F;">data_tree</span> = etree.parse(data_xml_path)
-
-<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">R&#233;cup&#233;ration des noeuds prix ayant leur attribut nom="Gazole"</span>
-<span style="color: #DFAF8F;">prix_elt_list</span> = data_tree.xpath(<span style="color: #CC9393;">'//prix[@nom="Gazole"]'</span>)
-
-<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Parcours des noeuds prix afin d'en extraire les attributs valeur</span>
-<span style="color: #DFAF8F;">prix_gazole</span> = []
-<span style="color: #F0DFAF; font-weight: bold;">for</span> prix_elt <span style="color: #F0DFAF; font-weight: bold;">in</span> prix_elt_list:
-<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   prix_gazole.append(prix_elt.xpath(<span style="color: #CC9393;">'@valeur'</span>)[0])
-
-<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Conversion de la liste de valeurs en Series Pandas pour faciliter les traitements</span>
-<span style="color: #DFAF8F;">prix_gazole_s</span> = pd.Series(prix_gazole).astype(<span style="color: #DCDCCC; font-weight: bold;">int</span>)
-
-<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Calcul du prix moyen du gazole :</span>
-<span style="color: #F0DFAF; font-weight: bold;">print</span>(f<span style="color: #CC9393;">"Prix moyen du gazole = {prix_gazole_s.mean()/1000:.4} &#8364;"</span>)
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org09ce228" class="outline-2">
-<h2 id="org09ce228"><span class="section-number-2">9</span> <i>Web scraping</i></h2>
-<div class="outline-text-2" id="text-9">
-</div>
-<div id="outline-container-org591182a" class="outline-3">
-<h3 id="org591182a"><span class="section-number-3">9.1</span> Définition</h3>
-<div class="outline-text-3" id="text-9-1">
-<p>
-Le <i>web scraping</i> est l'art d'extraire des données depuis un site web. Cette technique permet de
-récupérer des informations depuis site grâce à un logiciel et de les réutiliser ensuite.
-</p>
-
-<p>
-En pratique, le logiciel de scraping va parcourir les pages web cibles et tenter de
-tirer parti de la structure de leur code HTML afin de localiser les informations pertinentes.
-</p>
-
-<p>
-Le <i>web scraping</i> est particulièrement utile dans le cadre de la prospection
-ou de la veille concurrentielle d'une entreprise. On peut ainsi récolter les données d'un site concurrent
-pour surveiller ses variations de prix ou bien l'évolution de ses offres. Cela permet également de
-récupérer des retours clients et de réaliser des traitements statistiques sur ces derniers.
-</p>
-
-<p>
-<b>À noter que le <i>web scraping</i> n'a d'intérêt que si le site ciblé ne possède pas d'API permettant
-d'accéder facilement aux données recherchées.</b> 
-</p>
-</div>
-</div>
-
-<div id="outline-container-orgdf2ad97" class="outline-3">
-<h3 id="orgdf2ad97"><span class="section-number-3">9.2</span> Technique de <i>scraping</i> avec <code>Python</code></h3>
-<div class="outline-text-3" id="text-9-2">
-<p>
-Les principales librairies <code>Python</code> permettant de faire du <i>web scraping</i> sont les suivantes :
-</p>
-<ul class="org-ul">
-<li><a href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/"><code>Beautiful Soup</code></a> : Librairie de référence pour le <i>web scraping</i>. <code>Beautiful Soup</code> permet
-d'explorer le contenu des pages web bien structurées ou non.</li>
-<li><a href="https://lxml.de/"><code>lxml</code></a> : Librairie conçu initialement pour l'exploration des fichiers XML fonctionne également
-très bien avec les documents HTML bien structurés. En revanche, pour les pages HTML mal conçues,
-<code>lxml</code> n'est pas l'outil approprié.</li>
-<li><a href="https://docs.scrapy.org/en/latest/intro/tutorial.html"><code>scrapy</code></a> : Librairie proposant un ensemble d'outils de <i>web scraping</i> avancés. <code>scrapy</code> est
-probablement l'outil <code>Python</code> de <i>web scraping</i> le plus puissant en termes de fonctionnalités et
-de performances. Toutefois, <code>scrapy</code> est plus complexe à prendre en main que <code>Beautiful Soup</code> et
-<code>lxml</code> et s'adresse plutôt à des utilisateurs expérimentés.</li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-org5fa572e" class="outline-3">
-<h3 id="org5fa572e"><span class="section-number-3">9.3</span> Exemple</h3>
-<div class="outline-text-3" id="text-9-3">
-<p>
-Dans cet exemple, nous allons tenter d'extraire automatiquement les sujets postés sur le forum Morbihan du site du
-Routard : <a href="https://www.routard.com/forum_voyage/1511_morbihan_bretagne/60.htm">https://www.routard.com/forum_voyage/1511_morbihan_bretagne/60.htm</a>.
-</p>
-
-<p>
-Pour ce faire, nous utiliserons la librairie Beautiful Soup (<code>!pip install
-beautifulsoup4</code>). L'objectif final est de construire un DataFrame contenant les titres des sujets
-postés dans le forum avec leur auteur et la date du dernier message.
-</p>
-
-<p>
-Les grandes étapes du traitement sont les suivantes :
+<b>Travail à réaliser :</b>
 </p>
 <ol class="org-ol">
-<li>Ouvrir la page web cible et analyser rapidement son code source afin de repérer où se situent les
-informations recherchées.</li>
-<li>Lire la page web avec Beautiful Soup.</li>
-<li>Extraire une liste d'éléments contenant les informations recherchées.</li>
-<li>En considérant uniquement le premier élément de la liste précédente, extraire le sujet, l'auteur
-et la date.</li>
-<li>Automatiser le processus pour récupérer toutes les informations souhaitées.</li>
-<li>Stocker le résultat final dans un DataFrame.</li>
-</ol>
-
+<li><p>
+Faire un <i>boxplot</i> permettant la comparaison des distributions du temps avant défaillance majeure
+entre les
+composants <code>C01</code> et <code>C02</code>.
+</p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Import des modules</span>
-<span style="color: #F0DFAF; font-weight: bold;">import</span> pandas <span style="color: #F0DFAF; font-weight: bold;">as</span> pd
-<span style="color: #F0DFAF; font-weight: bold;">import</span> requests
-<span style="color: #F0DFAF; font-weight: bold;">from</span> bs4 <span style="color: #F0DFAF; font-weight: bold;">import</span> BeautifulSoup
+<pre class="src src-python"><span style="color: #F0DFAF; font-weight: bold;">import</span> plotly.express <span style="color: #F0DFAF; font-weight: bold;">as</span> px
 
-<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Lecture de la page web</span>
-<span style="color: #DFAF8F;">url</span> = <span style="color: #CC9393;">"https://www.routard.com/forum_voyage/1511_morbihan_bretagne/60.htm"</span>
-<span style="color: #DFAF8F;">html_text</span> = requests.get(url).text
-<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">L'objet soup contient une repr&#233;sentation structur&#233;e de la page web. </span>
-<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Nous allons donc pouvoir effectuer des requ&#234;tes sur cet objet afin </span>
-<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">d'extraire les informations souhait&#233;es.</span>
-<span style="color: #DFAF8F;">soup</span> = BeautifulSoup(html_text, <span style="color: #CC9393;">'html.parser'</span>)
+px.box(data_df, x=<span style="color: #CC9393;">"component"</span>, y=<span style="color: #CC9393;">"ttf"</span>,
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>  title=<span style="color: #CC9393;">"Distribution du temps avant d&#233;faillance majeure pour chaque composant"</span>,
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>  labels=<span style="color: #DCDCCC; font-weight: bold;">dict</span>(
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>  component=<span style="color: #CC9393;">"Composant"</span>,
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>  ttf=<span style="color: #CC9393;">"Temps avant d&#233;faillance majeure (en heures)"</span>))
+</pre>
+</div></li>
+<li>Faire un <i>boxplot</i> permettant la comparaison des distributions du nombre de sollicitations avant
+défaillance majeure entre les
+composants <code>C01</code> et <code>C02</code>.</li>
+<li>Quel composant semble le plus fiable selon vous ?</li>
+</ol>
+</div>
+</div>
 
-<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Recheche de tous les &#233;l&#233;ments HTML ayant un attribut itemtype="http://schema.org/Article"</span>
-<span style="color: #DFAF8F;">sujet_soup_list</span> = soup.find_all(itemtype=<span style="color: #CC9393;">"http://schema.org/Article"</span>)
+<div id="outline-container-orge65e9bd" class="outline-3">
+<h3 id="orge65e9bd"><span class="section-number-3">5.2</span> Analyses bivariées</h3>
+<div class="outline-text-3" id="text-5-2">
+<p>
+<b>Travail à réaliser :</b>
+</p>
+<ol class="org-ol">
+<li><p>
+Faire un <i>boxplot</i> représentant la distribution du temps avant défaillance en
+fonction du modèle du distributeur (en abscisse) et du composant (couleur). Observez-vous des différences de fiabilité entre modèles ?
+</p>
+<div class="org-src-container">
+<pre class="src src-python">px.box(data_df, x=<span style="color: #CC9393;">"model"</span>, y=<span style="color: #CC9393;">"ttf"</span>, color=<span style="color: #CC9393;">"component"</span>,
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>  title=<span style="color: #CC9393;">"Distribution du temps avant d&#233;faillance majeure en fonction du mod&#232;le du distributeur"</span>,
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>  labels=<span style="color: #DCDCCC; font-weight: bold;">dict</span>(
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>  component=<span style="color: #CC9393;">"Composant"</span>,
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>  model=<span style="color: #CC9393;">"Mod&#232;le du distributeur"</span>,
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>  ttf=<span style="color: #CC9393;">"Temps avant d&#233;faillance majeure (en heures)"</span>)
+</pre>
+</div></li>
+<li>Refaire l'analyse précédente en considérant les sollicitations. Les différences de fiabilité
+sont-elles analogues dans ce cas ?</li>
+<li><p>
+Refaire les deux graphiques précédents en considérant à la place du modèle :
+</p>
+<ul class="org-ul">
+<li>le site du distributeur ;</li>
+<li>le nombre de maintenances préventives réalisées.</li>
+</ul>
+<p>
+Analysez les résultats.
+</p></li>
+</ol>
+</div>
+</div>
+</div>
 
-<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Analyse du premier &#233;l&#233;ment afin d'extraire les informations souhait&#233;es</span>
-<span style="color: #DFAF8F;">sujet_soup</span> = sujet_soup_list[0]
-<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Extraction du titre</span>
-sujet_soup.find(itemprop=<span style="color: #CC9393;">"name"</span>).getText()
-<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Extraction de l'auteur</span>
-sujet_soup.find(itemprop=<span style="color: #CC9393;">"author"</span>).getText()
-<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Extraction de la date du dernier message</span>
-sujet_soup.find(<span style="color: #CC9393;">"time"</span>).get(<span style="color: #CC9393;">"datetime"</span>)
 
-<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Automatisation du processus</span>
-<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Liste qui contiendra les donn&#233;es extraites</span>
-<span style="color: #DFAF8F;">data</span> = []
-<span style="color: #F0DFAF; font-weight: bold;">for</span> sujet_soup <span style="color: #F0DFAF; font-weight: bold;">in</span> sujet_soup_list:
-<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   
-<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">R&#233;cup&#233;ration du titre</span>
-<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DFAF8F;">titre_elt</span> = sujet_soup.find(itemprop=<span style="color: #CC9393;">"name"</span>)
-<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Note: on v&#233;rifie que l'information est pr&#233;sente sinon on stocke la cha&#238;ne vide</span>
-<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DFAF8F;">titre</span> = titre_elt.getText() <span style="color: #F0DFAF; font-weight: bold;">if</span> <span style="color: #F0DFAF; font-weight: bold;">not</span>(titre_elt <span style="color: #F0DFAF; font-weight: bold;">is</span> <span style="color: #BFEBBF;">None</span>) <span style="color: #F0DFAF; font-weight: bold;">else</span> <span style="color: #CC9393;">""</span>
+<div id="outline-container-orgb1903a4" class="outline-2">
+<h2 id="orgb1903a4"><span class="section-number-2">6</span> Définition de la notion de durée</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+D'un point de vue probabiliste, la durée avant un événement d'intérêt est définie par une variable aléatoire \(T\) représentant le temps (ou l'usage) entre un
+instant initial (e.g. mise en service d'un appareil, début d'un traitement, dernier achat d'un
+client, etc) et la survenue de l'évènement d'intérêt (défaillance d'un appareil, guérison/décès d'un
+patient, nouvel achat d'un client). \(T\) est une variable aléatoire positive et continue.
+</p>
 
-<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">R&#233;cup&#233;ration de l'auteur</span>
-<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DFAF8F;">auteur_elt</span> = sujet_soup.find(itemprop=<span style="color: #CC9393;">"author"</span>)
-<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DFAF8F;">auteur</span> = auteur_elt.getText() <span style="color: #F0DFAF; font-weight: bold;">if</span> <span style="color: #F0DFAF; font-weight: bold;">not</span>(auteur_elt <span style="color: #F0DFAF; font-weight: bold;">is</span> <span style="color: #BFEBBF;">None</span>) <span style="color: #F0DFAF; font-weight: bold;">else</span> <span style="color: #CC9393;">""</span>
+<p>
+Selon les applications, la variable \(T\) peut être appelée durée de vie, survie, usage, etc.
+L'objectif d'une analyse de durée est alors de caractériser la loi de la variable \(T\) afin d'en
+comprendre le comportement et prévoir les événements futurs.
+</p>
 
-<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">R&#233;cup&#233;ration de la date</span>
-<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DFAF8F;">date_msg_elt</span> = sujet_soup.find(<span style="color: #CC9393;">"time"</span>)
-<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DFAF8F;">date_msg</span> = date_msg_elt[<span style="color: #CC9393;">"datetime"</span>] <span style="color: #F0DFAF; font-weight: bold;">if</span> <span style="color: #F0DFAF; font-weight: bold;">not</span>(date_msg_elt <span style="color: #F0DFAF; font-weight: bold;">is</span> <span style="color: #BFEBBF;">None</span>) <span style="color: #F0DFAF; font-weight: bold;">else</span> <span style="color: #CC9393;">""</span>
+<p>
+<b>Rappels et remarques</b>
+</p>
 
-<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Stockage des informations dans un dictionnaire</span>
-<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DFAF8F;">data_sujet</span> = <span style="color: #DCDCCC; font-weight: bold;">dict</span>(titre=titre, auteur=auteur, date_msg=date_msg)
+<ul class="org-ul">
+<li>La loi d'une variable aléatoire continue est déterminée par sa fonction de répartition (f.d.r.) \(F\) ou de manière
+équivalente par sa densité \(f\).</li>
+<li>On rappelle que la f.d.r. \(F\) d'une variable aléatoire de durée est définie pour
+\(t \ge 0\), par \(F(t) = P(T \le t)\).</li>
+<li>La quantité \(F(t)\) exprime donc la probabilité que l'événement d'intérêt ait lieu avant l'instant \(t\).</li>
+</ul>
 
-<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Ajout du dictionnaire dans la liste de donn&#233;es</span>
-<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   data.append(data_sujet)
+<p>
+<b>Retour sur le cas des distributeurs</b>
+</p>
 
-<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Cr&#233;ation d'un DataFrame contenant les donn&#233;es extraites</span>
-<span style="color: #DFAF8F;">data_df</span> = pd.DataFrame(data)
+<p>
+Si \(T_{1}\) représente la variable aléatoire de durée de vie du composant <code>C01</code>. En posant \(F_{1}\),
+la f.d.r. de \(T_{1}\), la quantité \(F_{1}(t)\) exprime alors la probabilité qu'un composant <code>C01</code>
+soit touché par une défaillance majeure avant l'instant \(t\). 
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd407e3c" class="outline-2">
+<h2 id="orgd407e3c"><span class="section-number-2">7</span> Modélisation non paramétrique</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+Dans la suite de ce TD, on désigne par :
+</p>
+<ul class="org-ul">
+<li>\(T_{1}\) et \(T_{2}\), les variables aléatoires du temps avant défaillance majeure des composants
+<code>C01</code> et <code>C02</code> respectivement.</li>
+<li>\(T^{\prime}_{1}\) et \(T^{\prime}_{2}\), les variables aléatoires du nombre d'opérations avant
+défaillance majeure des composants <code>C01</code> et <code>C02</code> respectivement.</li>
+</ul>
+</div>
+
+<div id="outline-container-orgc48081b" class="outline-3">
+<h3 id="orgc48081b"><span class="section-number-3">7.1</span> Fonction de répartition empirique (Kaplan-Meier)</h3>
+<div class="outline-text-3" id="text-7-1">
+<p>
+Dans cette section, nous allons modéliser les fonctions de répartition des variables \(T_{1}, T_{2},
+T^{\prime}_{1}, T^{\prime}_{2}\) par leur fonction de répartition (f.d.r.) empirique.
+</p>
+
+<p>
+<b>Travail à réaliser :</b>
+</p>
+
+<ol class="org-ol">
+<li><p>
+Tout d'abord, il faut importer la librairie <code>lifeline</code> (à installer si ce n'est pas déjà le cas) :
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #F0DFAF; font-weight: bold;">import</span> lifeline <span style="color: #F0DFAF; font-weight: bold;">as</span> ll
+<span style="color: #F0DFAF; font-weight: bold;">print</span>(ll.version) <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Vous devriez avoir au moins la version 0.26.1</span>
+</pre>
+</div></li>
+<li><p>
+Dans les modèles de durée, l'estimateur de la fonction de empirique s'appelle l'estimateur de
+Kaplan-Meier. On commence donc par créer un modèle de Kaplan-Meier pour la durée de vie du
+composant <code>C01</code> :
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #DFAF8F;">km_c01_ttf</span> = ll.KaplanMeierFitter()
+</pre>
+</div></li>
+<li><p>
+Réaliser l'apprentissage du modèle de durée de vie précédent : 
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #DFAF8F;">idx_c01</span> = data_df[<span style="color: #CC9393;">"component"</span>] == <span style="color: #CC9393;">"C01"</span>
+<span style="color: #DFAF8F;">c01_ttf</span> = data_df.loc[idx_c01, <span style="color: #CC9393;">"ttf"</span>]
+km_c01_ttf.fit(c01_ttf)
+</pre>
+</div></li>
+<li><p>
+Utiliser l'attribut <code>.cumulative_density</code> pour représenter la f.d.r. empirique
+avec <code>plotly</code> :
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #DFAF8F;">idx_c01</span> = data_df[<span style="color: #CC9393;">"component"</span>] == <span style="color: #CC9393;">"C01"</span>
+<span style="color: #DFAF8F;">c01_ttf</span> = data_df.loc[idx_c01, <span style="color: #CC9393;">"ttf"</span>]
+km_c01_ttf.fit(c01_ttf)
 </pre>
 </div>
+<p>
+Note: <i>cumulative density</i> signifie fonction de répartition en anglais.
+</p></li>
+<li>Interpréter le résultat de la méthode <code>km_c01_ttf.cumulative_density_at_times(5000)</code>.</li>
+<li>Calculer la probabilité qu'une défaillance majeure survienne sur le composant <code>C01</code> entre 10000
+et 15000 heures.</li>
+<li>Reprendre les questions précédentes en considérant le composant <code>C02</code>.</li>
+<li>Représenter sur les f.d.r. empiriques de la durée de vie des composants <code>C01</code> et <code>C02</code> sur le
+même graphique. Interpréter les résultats.</li>
+</ol>
+
+<p>
+<b>Rappel : Fonction de répartition empirique</b>
+À partir d'observations de durée \((t_{1}, \ldots, t_{n}\), la fonction de répartition (f.d.r.) empirique de la
+loi de durée sous-jacente est donnée par :
+\[
+\widehat{F}_{n}(t) = \widehat{P}(T \le t) = \frac{1}{n}\sum_{i=1}^{n} \unicode{x1D7D9}_{t_{i} \le t}
+\]
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org1e621c4" class="outline-3">
+<h3 id="org1e621c4"><span class="section-number-3">7.2</span> Fonction de survie/fiabilité</h3>
+<div class="outline-text-3" id="text-7-2">
+<p>
+En considérant une variable de durée \(T\) et sa f.d.r. \(F\), on définit la fonction de survie de \(T\),
+notée \(S\) par :
+\[
+S(t) = 1 - F(t) = P(T > t),~ t \ge 0.
+\]
+</p>
+
+<p>
+La fonction survie est donc une autre façon de caractériser la loi de la variable \(T\). Dans
+l'industrie, la fonction de survie est souvent appelée fiabilité, notée \(R\).
+</p>
+
+<p>
+<b>Travail à réaliser :</b>
+</p>
+<ul class="org-ul">
+<li>Représenter graphiquement la fonction de survie empirique du composant <code>C01</code>.</li>
+<li>Vérifier le calcul précédent en utilisant la méthode <code>km_c01_ttf.survival_function_at_times</code>.</li>
+<li>Calculer la probabilité que le composant <code>C01</code> fonctionne sans défaillance majeure au moins 1 an.</li>
+<li>Donner l'expression de la probabilité qu'un composant fonctionne au moins jusqu'à l'instant \(t_{b}\) sachant
+qu'il a fonctionné jusqu'à l'instant \(t_{a}\).</li>
+<li>Application : Calculer la probabilité que le composant <code>C01</code> fonctionne sans défaillance majeure
+au moins 2 ans sachant qu'il a fonctionné 1 an.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org854feb4" class="outline-3">
+<h3 id="org854feb4"><span class="section-number-3">7.3</span> Taux de risque instantané</h3>
+<div class="outline-text-3" id="text-7-3">
+<p>
+Un autre indicateur couramment utilisé pour caractériser la loi d'une variable de durée \(T\) est le taux de risque
+instantané. 
+</p>
+
+<p>
+Le taux de risque instantané, noté \(h\), est défini par :
+\[
+h(t) = \lim_{dt \to 0} \frac{P(t \le T < t + dt | T \ge t)}{dt},~ t \ge 0
+\]
+</p>
+
+<p>
+<b>Interprétations :</b>
+</p>
+<ul class="org-ul">
+<li>Cette quantité donne une sorte de score (ce n'est pas une probabilité) que l'événement d'intérêt
+survienne tout juste après \(t\) alors que ce dernier n'a pas eu lieu avant \(t\).</li>
+<li>Le taux de risque instantané est positif est s'exprime par unité de temps.</li>
+</ul>
+
+<p>
+<b>Travail à réaliser :</b>
+</p>
+<ol class="org-ol">
+<li>Montrer que pour tout \(t \ge 0\), \(h(t) = \frac{f(t)}{S(t)}\), où \(f\) est la densité d'une variable
+de durée \(T\).</li>
+<li><p>
+Pour calculer le taux de risque instantané empirique, il faut utiliser l'estimateur de
+Nelson-Aalen. Sur le composant <code>C01</code>, cela donne :
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #DFAF8F;">na_c01_ttf</span> = ll.NelsonAalenFitter()
+na_c01_ttf.fit(c01_ttf)
+</pre>
+</div></li>
+<li><p>
+Représenter graphiquement la taux de risque instantané du composant <code>C01</code> grâce à la méthode
+<code>na_c01_ttf.plot_hazard</code> :
+</p>
+<div class="org-src-container">
+<pre class="src src-python">na_c01_ttf.plot_hazard(bandwidth=1)
+</pre>
+</div></li>
+<li>Faire de même pour le composant <code>C02</code> et comparer les résultats.</li>
+</ol>
+
+<p>
+<b>Remarques :</b>
+</p>
+<ul class="org-ul">
+<li>Le taux de risque instantané ne fournit pas des informations intuitives et directement
+interprétables comme la f.d.r. ou la fonction de survie.</li>
+<li>Toutefois, cette fonction a des propriétés mathématiques intéressantes et est utilisée pour
+construire des modèles de durée plus avancés.</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org55c5ec8" class="outline-2">
+<h2 id="org55c5ec8"><span class="section-number-2">8</span> Modèle de Cox</h2>
+<div class="outline-text-2" id="text-8">
+</div>
+<div id="outline-container-org95f2ddb" class="outline-3">
+<h3 id="org95f2ddb"><span class="section-number-3">8.1</span> Éléments de théorie</h3>
+<div class="outline-text-3" id="text-8-1">
+<p>
+Dans les sections précédentes, nous avons vu comment représenter une loi de durée à partir des
+observations des temps d'occurrence de l'événement d'intérêt uniquement. Il s'agissait de modèle
+univarié permettant de caractériser la variable de durée \(T\) sans tenir compte de facteurs
+explicatifs impactant potentiellement la survenue de l'événement.
+</p>
+
+<p>
+Afin de palier ces limites, nous introduisons à présent le modèle de Cox. Il s'agit d'un modèle de
+régression adapté à l'explication d'une variable de durée à partir de variables explicatives (on
+parle également de covariables) qualitatives ou quantitatives binaires. 
+</p>
+
+<p>
+Le principe du modèle de Cox est de considérer que le logarithme du taux de risque, \(h\), de l'événement
+d'intérêt est une fonction linéaire d'une suite de covariables \(X_{1}, \ldots, X_{n}\) et d'un taux
+de risque de référence \(h_{0}\) pour l'événement.
+</p>
+
+<p>
+Cela se traduit par la formulation suivante :
+\[
+h(t|X_{1},\ldots,X_{n}) = h_{0}(t) \exp\left(\sum_{i=1}^{n} \beta_{i}
+X_{i}\right)
+\]
+où :
+</p>
+<ul class="org-ul">
+<li>le taux de risque de référence \(h_{0}\) dépend du temps mais pas des covariables \(X_{1}, \ldots,
+  X_{n}\) ;</li>
+<li>on appelle taux de risque relatif la composante \(\exp\left(\sum_{i=1}^{n} \beta_{i} X_{i}\right)\)
+qui ne dépend que des covariables et des coefficients de régression \(\beta_{1}, \ldots, \beta_{n}\).</li>
+<li>un changement sur les covariables conduit à une modification du taux de risque relatif qui vient
+pondérer à la hausse ou à la baisse le taux de risque de référence.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org3cbb363" class="outline-3">
+<h3 id="org3cbb363"><span class="section-number-3">8.2</span> Covariable quantitative</h3>
+<div class="outline-text-3" id="text-8-2">
+<p>
+Nous allons construire un premier modèle de Cox permettant d'évaluer la durée de vie des composants
+<code>C01</code> et <code>C02</code> en tenant compte des maintenances préventives effectuées entre deux pannes majeures.
+</p>
+
+<p>
+Nous sommes donc dans le cas où il n'y a qu'une covariable quantitative \(X = \texttt{nb_pm}\).
+</p>
+
+<p>
+<b>Travail à réaliser</b>
+</p>
+<ol class="org-ol">
+<li>Donner l'expression du taux de risque dans un modèle de Cox à une covariable.</li>
+<li><p>
+Utiliser la fonction <code>CoxPHFitter</code> afin d'initialiser un modèle de Cox pour le composant <code>CO1</code>
+tenant compte de la covariable <code>nb_pm</code> :
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #DFAF8F;">cox_c01_pm_ttf</span> = ll.CoxPHFitter()
+cox_c01_pm_ttf.fit(data_df.loc[idx_c01, [<span style="color: #CC9393;">"ttf"</span>, <span style="color: #CC9393;">"nb_pm"</span>]], duration_col=<span style="color: #CC9393;">"ttf"</span>)
+</pre>
+</div></li>
+<li><p>
+Utiliser la méthode <code>cox_c01_pm_ttf.print_summary()</code> afin d'afficher un résumé de votre régression.
+</p>
+<div class="org-src-container">
+<pre class="src src-python">cox_c01_pm_ttf.print_summary()
+</pre>
+</div>
+<p>
+ Essayez d'interpréter les résultats par analogie avec les autres types de régressions que vous
+connaissez.
+</p></li>
+<li>Que vaut le rapport des risques \(RR(X) = \frac{h(t|X=1)}{h(t|X=0)}\) ? Comment interpréter le
+paramètre associé à la covariable \(X\) sur la survenue de l'événement d'intérêt ?</li>
+<li><p>
+Représenter graphiquement la fonction de survie du composant <code>C01</code> en faisant varier le nombre de
+maintenances préventives réalisées :
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #DFAF8F;">nb_pm_val</span> = [0, 1, 2, 3]
+<span style="color: #DFAF8F;">cox_c01_pm_ttf_surv_df</span> = cox_c01_pm_ttf.predict_survival_function(pd.DataFrame(<span style="color: #DCDCCC; font-weight: bold;">dict</span>(nb_pm=nb_pm_val)))
+<span style="color: #DFAF8F;">cox_c01_pm_ttf_surv_df.columns</span> = [f<span style="color: #CC9393;">"={v}"</span> <span style="color: #F0DFAF; font-weight: bold;">for</span> v <span style="color: #F0DFAF; font-weight: bold;">in</span> nb_pm_val] <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">On renomme les colonnes avec la valeur de la covariable</span>
+px.line(cox_c01_pm_ttf_surv_df,
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   title=<span style="color: #CC9393;">"Fonction de survie du composant C01 en fonction du nombre de maintenances pr&#233;ventives r&#233;alis&#233;es"</span>,
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   labels=<span style="color: #DCDCCC; font-weight: bold;">dict</span>(
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   variable=<span style="color: #CC9393;">"nb_pm"</span>,
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   value=<span style="color: #CC9393;">"probabilit&#233;"</span>, 
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   timeline=<span style="color: #CC9393;">"Temps (en heures)"</span>)
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   )
+</pre>
+</div>
+<p>
+ Ce résultat graphique est-il cohérent par rapport à la valeur du paramètre associé à la variable
+<code>nb_pm</code>.
+</p></li>
+<li>Calculer la durée de vie médiane d'un composant <code>C01</code> ayant eu 0, 1, 2 ou 3 maintenances
+préventives selon le modèle. Utiliser la méthode <code>cox_c01_pm_ttf.predict_median(pd.DataFrame(dict(nb_pm=nb_pm_val)))</code>.</li>
+<li>Dérouler les questions précédentes avec le composant <code>C02</code>.</li>
+<li>Dérouler les questions précédentes en ajoutant une seconde covariable quantitative.</li>
+</ol>
+</div>
+</div>
+
+
+<div id="outline-container-orga91abac" class="outline-3">
+<h3 id="orga91abac"><span class="section-number-3">8.3</span> Covariable qualitative</h3>
+<div class="outline-text-3" id="text-8-3">
+<p>
+Il s'agit à présent de construire un seconde modèle de Cox permettant cette fois-ci d'évaluer la
+durée de vie des composants en tenant compte du site où est installé le distributeur.
+</p>
+
+<p>
+Nous sommes donc dans le cas où il n'y a qu'une covariable qualitative \(X = \texttt{site}\).
+</p>
+
+<p>
+Toutefois, cette covariable étant définie sur plusieurs modalités <code>E</code>, <code>S</code>, <code>I</code> et <code>H</code>, il faut,
+comme pour la régression logistique, créer au préalable trois variables de <i>design</i> binaires.
+</p>
+
+<p>
+<b>Travail à réaliser</b>
+</p>
+<ol class="org-ol">
+<li>Donner l'expression du taux de risque dans un modèle de Cox à une covariable qualitative à \(m\)
+modalités.</li>
+<li><p>
+Utiliser la librairie <code>patsy</code> pour construire les données contenant les observations de durée de
+vie (variable <code>ttf</code>) et les variables de <i>design</i> associées à la variable
+<code>site</code> pour le composant <code>C01</code> :
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #DFAF8F;">data_dsite_ttf_df</span> = patsy.dmatrix(<span style="color: #CC9393;">"ttf + site"</span>, 
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span> data_df.loc[idx_c01, [<span style="color: #CC9393;">"ttf"</span>, <span style="color: #CC9393;">"site"</span>]], 
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span> return_type=<span style="color: #CC9393;">"dataframe"</span>).drop(<span style="color: #CC9393;">"Intercept"</span>, axis=1)
+</pre>
+</div></li>
+<li>Créer un modèle pour le composant <code>CO1</code> tenant compte des covariables de <i>design</i> associées à la
+variable <code>site</code>. Interprétez les résultats de la régression et en particulier la valeur des
+ coefficients.</li>
+<li>Représenter graphiquement la fonction de survie du composant <code>C01</code> en fonction du site du
+distributeur.</li>
+<li>Calculer la durée de vie médiane d'un composant <code>C01</code> sur les différents sites.</li>
+<li>Dérouler les questions précédentes avec le composant <code>C02</code>.</li>
+</ol>
 </div>
 </div>
 </div>
