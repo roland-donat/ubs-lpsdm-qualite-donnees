@@ -263,29 +263,29 @@ for the JavaScript code in this tag.
 <h2>Table des matières</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgfbaf6a9">1. Objectifs</a></li>
-<li><a href="#orgbb80ac9">2. Environnement de travail</a></li>
-<li><a href="#org374657d">3. Introduction sur les modèles de durée</a></li>
-<li><a href="#org397dcb0">4. Données et objectif</a></li>
-<li><a href="#org22f7f35">5. Analyses descriptives</a>
+<li><a href="#org40bbfc3">1. Objectifs</a></li>
+<li><a href="#org35527ec">2. Environnement de travail</a></li>
+<li><a href="#org49cef65">3. Introduction sur les modèles de durée</a></li>
+<li><a href="#org890eaba">4. Données et objectif</a></li>
+<li><a href="#org3eef6a2">5. Analyses descriptives</a>
 <ul>
-<li><a href="#org54b7e76">5.1. Analyses univariées</a></li>
-<li><a href="#org861f81b">5.2. Analyses bivariées</a></li>
+<li><a href="#org2ffdd7a">5.1. Analyses univariées</a></li>
+<li><a href="#orgf786494">5.2. Analyses bivariées</a></li>
 </ul>
 </li>
-<li><a href="#org8d1b57a">6. Définition de la notion de durée</a></li>
-<li><a href="#org7863c52">7. Modélisation non paramétrique</a>
+<li><a href="#org11c3569">6. Définition de la notion de durée</a></li>
+<li><a href="#org426e1bc">7. Modélisation non paramétrique</a>
 <ul>
-<li><a href="#org4c499bc">7.1. Fonction de répartition empirique (Kaplan-Meier)</a></li>
-<li><a href="#orgb6c20da">7.2. Fonction de survie/fiabilité</a></li>
-<li><a href="#org3ac88c7">7.3. Taux de risque instantané</a></li>
+<li><a href="#org1cb3107">7.1. Fonction de répartition empirique (Kaplan-Meier)</a></li>
+<li><a href="#org34a9868">7.2. Fonction de survie/fiabilité</a></li>
+<li><a href="#orgcabc59f">7.3. Taux de risque instantané</a></li>
 </ul>
 </li>
-<li><a href="#org8900f46">8. Modèle de Cox</a>
+<li><a href="#org6b0cea4">8. Modèle de Cox</a>
 <ul>
-<li><a href="#org4b5109b">8.1. Éléments de théorie</a></li>
-<li><a href="#org0cc6ba8">8.2. Covariable quantitative</a></li>
-<li><a href="#org8d4f3f9">8.3. Covariable qualitative</a></li>
+<li><a href="#orgc6494e7">8.1. Éléments de théorie</a></li>
+<li><a href="#org5f52b8a">8.2. Covariable quantitative</a></li>
+<li><a href="#orge31a4a8">8.3. Covariable qualitative</a></li>
 </ul>
 </li>
 </ul>
@@ -293,8 +293,8 @@ for the JavaScript code in this tag.
 </div>
 
 
-<div id="outline-container-orgfbaf6a9" class="outline-2">
-<h2 id="orgfbaf6a9"><span class="section-number-2">1</span> Objectifs</h2>
+<div id="outline-container-org40bbfc3" class="outline-2">
+<h2 id="org40bbfc3"><span class="section-number-2">1</span> Objectifs</h2>
 <div class="outline-text-2" id="text-1">
 <ol class="org-ol">
 <li>Découvrir le principe des modèles de durée.</li>
@@ -305,8 +305,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgbb80ac9" class="outline-2">
-<h2 id="orgbb80ac9"><span class="section-number-2">2</span> Environnement de travail</h2>
+<div id="outline-container-org35527ec" class="outline-2">
+<h2 id="org35527ec"><span class="section-number-2">2</span> Environnement de travail</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Dans cette session, nous allons travailler sur <a href="https://deepnote.com/">Deepnote</a> qui une plateforme de
@@ -324,8 +324,8 @@ Avant de débuter le travail, veuillez à :
 </div>
 </div>
 
-<div id="outline-container-org374657d" class="outline-2">
-<h2 id="org374657d"><span class="section-number-2">3</span> Introduction sur les modèles de durée</h2>
+<div id="outline-container-org49cef65" class="outline-2">
+<h2 id="org49cef65"><span class="section-number-2">3</span> Introduction sur les modèles de durée</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Dans ce TD, nous nous intéressons à l'analyse statistique de données portant sur les temps d'occurrence d'un
@@ -370,8 +370,8 @@ fiabilité issues d'un parc de distributeurs de tickets.
 </div>
 </div>
 
-<div id="outline-container-org397dcb0" class="outline-2">
-<h2 id="org397dcb0"><span class="section-number-2">4</span> Données et objectif</h2>
+<div id="outline-container-org890eaba" class="outline-2">
+<h2 id="org890eaba"><span class="section-number-2">4</span> Données et objectif</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 Les données utilisées dans ce TD contiennent un historique de durées et de sollicitations avant
@@ -406,8 +406,8 @@ fonction des caractéristiques des distributeurs.
 </div>
 
 
-<div id="outline-container-org22f7f35" class="outline-2">
-<h2 id="org22f7f35"><span class="section-number-2">5</span> Analyses descriptives</h2>
+<div id="outline-container-org3eef6a2" class="outline-2">
+<h2 id="org3eef6a2"><span class="section-number-2">5</span> Analyses descriptives</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 Il s'agit ici de mieux comprendre les variations des variables <code>ttf</code> et <code>ctf</code> caractérisant la durée de vie
@@ -416,8 +416,8 @@ bivariées avec la librairie <code>plotly.express</code>.
 </p>
 </div>
 
-<div id="outline-container-org54b7e76" class="outline-3">
-<h3 id="org54b7e76"><span class="section-number-3">5.1</span> Analyses univariées</h3>
+<div id="outline-container-org2ffdd7a" class="outline-3">
+<h3 id="org2ffdd7a"><span class="section-number-3">5.1</span> Analyses univariées</h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
 <b>Travail à réaliser :</b>
@@ -446,8 +446,8 @@ composants <code>C01</code> et <code>C02</code>.</li>
 </div>
 </div>
 
-<div id="outline-container-org861f81b" class="outline-3">
-<h3 id="org861f81b"><span class="section-number-3">5.2</span> Analyses bivariées</h3>
+<div id="outline-container-orgf786494" class="outline-3">
+<h3 id="orgf786494"><span class="section-number-3">5.2</span> Analyses bivariées</h3>
 <div class="outline-text-3" id="text-5-2">
 <p>
 <b>Travail à réaliser :</b>
@@ -484,8 +484,8 @@ Analysez les résultats.
 </div>
 
 
-<div id="outline-container-org8d1b57a" class="outline-2">
-<h2 id="org8d1b57a"><span class="section-number-2">6</span> Définition de la notion de durée</h2>
+<div id="outline-container-org11c3569" class="outline-2">
+<h2 id="org11c3569"><span class="section-number-2">6</span> Définition de la notion de durée</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 D'un point de vue probabiliste, la durée avant un événement d'intérêt est définie par une variable aléatoire \(T\) représentant le temps (ou l'usage) entre un
@@ -524,8 +524,8 @@ soit touché par une défaillance majeure avant l'instant \(t\).
 </div>
 </div>
 
-<div id="outline-container-org7863c52" class="outline-2">
-<h2 id="org7863c52"><span class="section-number-2">7</span> Modélisation non paramétrique</h2>
+<div id="outline-container-org426e1bc" class="outline-2">
+<h2 id="org426e1bc"><span class="section-number-2">7</span> Modélisation non paramétrique</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 Dans la suite de ce TD, on désigne par :
@@ -547,8 +547,8 @@ loi de durée sous-jacente est donnée par :
 </p>
 </div>
 
-<div id="outline-container-org4c499bc" class="outline-3">
-<h3 id="org4c499bc"><span class="section-number-3">7.1</span> Fonction de répartition empirique (Kaplan-Meier)</h3>
+<div id="outline-container-org1cb3107" class="outline-3">
+<h3 id="org1cb3107"><span class="section-number-3">7.1</span> Fonction de répartition empirique (Kaplan-Meier)</h3>
 <div class="outline-text-3" id="text-7-1">
 <p>
 Dans cette section, nous allons modéliser les fonctions de répartition des variables \(T_{1}, T_{2},
@@ -611,8 +611,8 @@ même graphique. Interpréter les résultats.</li>
 </div>
 
 
-<div id="outline-container-orgb6c20da" class="outline-3">
-<h3 id="orgb6c20da"><span class="section-number-3">7.2</span> Fonction de survie/fiabilité</h3>
+<div id="outline-container-org34a9868" class="outline-3">
+<h3 id="org34a9868"><span class="section-number-3">7.2</span> Fonction de survie/fiabilité</h3>
 <div class="outline-text-3" id="text-7-2">
 <p>
 En considérant une variable de durée \(T\) et sa f.d.r. \(F\), on définit la fonction de survie de \(T\),
@@ -630,20 +630,19 @@ l'industrie, la fonction de survie est souvent appelée fiabilité, notée \(R\)
 <p>
 <b>Travail à réaliser :</b>
 </p>
-<ul class="org-ul">
+<ol class="org-ol">
 <li>Représenter graphiquement la fonction de survie empirique du composant <code>C01</code>.</li>
-<li>Vérifier le calcul précédent en utilisant la méthode <code>km_c01_ttf.survival_function_at_times</code>.</li>
-<li>Calculer la probabilité que le composant <code>C01</code> fonctionne sans défaillance majeure au moins 1 an.</li>
+<li>Calculer la probabilité que le composant <code>C01</code> fonctionne sans défaillance majeure au moins 1 an en utilisant la méthode <code>km_c01_ttf.survival_function_at_times</code>.</li>
 <li>Donner l'expression de la probabilité qu'un composant fonctionne au moins jusqu'à l'instant \(t_{b}\) sachant
 qu'il a fonctionné jusqu'à l'instant \(t_{a}\).</li>
 <li>Application : Calculer la probabilité que le composant <code>C01</code> fonctionne sans défaillance majeure
 au moins 2 ans sachant qu'il a fonctionné 1 an.</li>
-</ul>
+</ol>
 </div>
 </div>
 
-<div id="outline-container-org3ac88c7" class="outline-3">
-<h3 id="org3ac88c7"><span class="section-number-3">7.3</span> Taux de risque instantané</h3>
+<div id="outline-container-orgcabc59f" class="outline-3">
+<h3 id="orgcabc59f"><span class="section-number-3">7.3</span> Taux de risque instantané</h3>
 <div class="outline-text-3" id="text-7-3">
 <p>
 Un autre indicateur couramment utilisé pour caractériser la loi d'une variable de durée \(T\) est le taux de risque
@@ -705,12 +704,12 @@ construire des modèles de durée plus avancés.</li>
 </div>
 </div>
 
-<div id="outline-container-org8900f46" class="outline-2">
-<h2 id="org8900f46"><span class="section-number-2">8</span> Modèle de Cox</h2>
+<div id="outline-container-org6b0cea4" class="outline-2">
+<h2 id="org6b0cea4"><span class="section-number-2">8</span> Modèle de Cox</h2>
 <div class="outline-text-2" id="text-8">
 </div>
-<div id="outline-container-org4b5109b" class="outline-3">
-<h3 id="org4b5109b"><span class="section-number-3">8.1</span> Éléments de théorie</h3>
+<div id="outline-container-orgc6494e7" class="outline-3">
+<h3 id="orgc6494e7"><span class="section-number-3">8.1</span> Éléments de théorie</h3>
 <div class="outline-text-3" id="text-8-1">
 <p>
 Dans les sections précédentes, nous avons vu comment représenter une loi de durée à partir des
@@ -750,8 +749,8 @@ pondérer à la hausse ou à la baisse le taux de risque de référence.</li>
 </div>
 </div>
 
-<div id="outline-container-org0cc6ba8" class="outline-3">
-<h3 id="org0cc6ba8"><span class="section-number-3">8.2</span> Covariable quantitative</h3>
+<div id="outline-container-org5f52b8a" class="outline-3">
+<h3 id="org5f52b8a"><span class="section-number-3">8.2</span> Covariable quantitative</h3>
 <div class="outline-text-3" id="text-8-2">
 <p>
 Nous allons construire un premier modèle de Cox permettant d'évaluer la durée de vie des composants
@@ -819,8 +818,8 @@ préventives selon le modèle. Utiliser la méthode <code>cox_c01_pm_ttf.predict
 </div>
 
 
-<div id="outline-container-org8d4f3f9" class="outline-3">
-<h3 id="org8d4f3f9"><span class="section-number-3">8.3</span> Covariable qualitative</h3>
+<div id="outline-container-orge31a4a8" class="outline-3">
+<h3 id="orge31a4a8"><span class="section-number-3">8.3</span> Covariable qualitative</h3>
 <div class="outline-text-3" id="text-8-3">
 <p>
 Il s'agit à présent de construire un seconde modèle de Cox permettant cette fois-ci d'évaluer la
