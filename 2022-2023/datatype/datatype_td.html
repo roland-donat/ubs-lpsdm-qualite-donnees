@@ -1,0 +1,661 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Techniques de traitement des sources de données usuelles avec =Python=</title>
+<meta name="author" content="Roland Donat" />
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"></script>
+<link rel="stylesheet" type="text/css" href="https://roland-donat.github.io/ubs/Charte_graphique/IUT/ubs_iut_vannes.css" />
+<link rel="stylesheet" type="text/css" href="https://roland-donat.github.io/ubs-lpsdm-qualite-donnees/custom.css" />
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Techniques de traitement des sources de données usuelles avec <code>Python</code></h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table des matières</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orge159573">1. Objectifs</a></li>
+<li><a href="#orgda9a1bf">2. Environnement de travail</a></li>
+<li><a href="#org5395b14">3. Fichiers tabulaires</a>
+<ul>
+<li><a href="#org76f4208">3.1. Format CSV</a></li>
+<li><a href="#org667a85c">3.2. Format <code>xlsx</code></a></li>
+</ul>
+</li>
+<li><a href="#org5d44863">4. Format JSON</a></li>
+<li><a href="#orgc910904">5. Format YAML</a></li>
+<li><a href="#orgb5fb5ce">6. Format XML</a></li>
+<li><a href="#orgd640e9a">7. <i>Web scraping</i></a>
+<ul>
+<li><a href="#orga7b266c">7.1. Définition</a></li>
+<li><a href="#org87a87cf">7.2. Technique de <i>scraping</i> avec <code>Python</code></a></li>
+<li><a href="#org2113ce3">7.3. Exemple</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+
+
+
+<p width="100%" alt="comics">
+<img src="https://imgs.xkcd.com/comics/convincing.png" alt="comics" width="100%" />
+<a href="https://xkcd.com/833/">Source de l'image</a>
+</p>
+
+<div id="outline-container-orge159573" class="outline-2">
+<h2 id="orge159573"><span class="section-number-2">1.</span> Objectifs</h2>
+<div class="outline-text-2" id="text-1">
+<ol class="org-ol">
+<li>Donner un aperçu des principaux formats de données usuels (hors bases de données).</li>
+<li>Présenter les librairies <code>Python</code> permettant de traiter ces différents formats.</li>
+<li>Présenter des techniques d'extraction d'information depuis une page web (<i>web scraping</i>).</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-orgda9a1bf" class="outline-2">
+<h2 id="orgda9a1bf"><span class="section-number-2">2.</span> Environnement de travail</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Dans cette session, nous proposons de travailler avec <a href="https://deepnote.com/">Deepnote</a>. <a href="https://deepnote.com/">Deepnote</a> est une plateforme de
+développement collaborative en ligne reposant sur l'édition de <i>notebooks</i> (exactement comme
+<a href="https://colab.research.google.com/">Google Colab</a>).
+</p>
+
+<p>
+Avant de débuter le travail, veillez à :
+</p>
+<ul class="org-ul">
+<li>vous inscrire sur <a href="https://deepnote.com/">Deepnote</a> ;</li>
+<li>créer un nouveau <i>notebook</i> que vous dédierez à cette séance ;</li>
+<li>prendre rapidement vos marques avec l'interface <a href="https://deepnote.com/">Deepnote</a>.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org5395b14" class="outline-2">
+<h2 id="org5395b14"><span class="section-number-2">3.</span> Fichiers tabulaires</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Un fichier au format dit "tabulaire" est tout simplement un fichier dont les données peuvent se
+structurer sous la forme d'un tableau à double entrée.
+</p>
+
+<p>
+Le format tabulaire le plus utilisé est le format CSV (<i>Comma Separated Values</i>). Mais, d'autres
+  formats plus complexes existent comme le format Excel (<code>xlsx</code>) ou encore le format LibreOffice
+  (ODS, <i>Open Document Spreadsheet</i>).
+</p>
+</div>
+
+<div id="outline-container-org76f4208" class="outline-3">
+<h3 id="org76f4208"><span class="section-number-3">3.1.</span> Format CSV</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+<b>Caractéristiques :</b>
+</p>
+<ul class="org-ul">
+<li>Format texte, i.e. lisible et éditable avec un éditeur de texte classique.</li>
+<li>Données séparées par un caractère de séparation (par défaut la virgule).</li>
+</ul>
+
+<p>
+<b>Traitements <code>Python</code> :</b>
+</p>
+<ul class="org-ul">
+<li>Utilisation de la librairie <code>Pandas</code>.</li>
+<li>Lecture des données avec la fonction <code>read_csv</code>.</li>
+<li>Écriture des données avec la méthode <code>to_csv</code>.</li>
+</ul>
+
+<p>
+<b>Exemple :</b>
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #F0DFAF; font-weight: bold;">import</span> pandas <span style="color: #F0DFAF; font-weight: bold;">as</span> pd
+
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Lecture</span>
+<span style="color: #DFAF8F;">data_csv_path</span> = <span style="color: #CC9393;">"https://roland-donat.github.io/ubs-lpsdm-qualite-donnees/2021-2022/datatype/data/stadiums.csv"</span>
+<span style="color: #DFAF8F;">data_csv</span> = pd.read_csv(data_csv_path)
+
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Modification</span>
+<span style="color: #DFAF8F;">data_csv</span> = data_csv.drop(columns=[<span style="color: #CC9393;">"Team"</span>])
+data_csv.rename(columns={<span style="color: #CC9393;">"FDCOUK"</span>: <span style="color: #CC9393;">"Team ID"</span>}, inplace=<span style="color: #BFEBBF;">True</span>)
+
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">&#201;criture</span>
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">index=False permet de ne pas sauvegarder l'index (nom des ligne)</span>
+data_csv.to_csv(<span style="color: #CC9393;">"stadiums_new.csv"</span>, index=<span style="color: #BFEBBF;">False</span>)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org667a85c" class="outline-3">
+<h3 id="org667a85c"><span class="section-number-3">3.2.</span> Format <code>xlsx</code></h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+<b>Caractéristiques :</b>
+</p>
+<ul class="org-ul">
+<li>Format natif Microsoft Excel, i.e. lisible et éditable avec les principaux tableurs (Excel,
+LibreOffice, Google Sheets, etc.)</li>
+<li>Format contenant, en plus des données, des informations sur les types des valeurs (nombre, date,
+chaîne) et de la mise en forme visuelle.</li>
+<li>En pratique le format <code>xslx</code> s'appuie sur le format <code>XML</code>.</li>
+</ul>
+
+<p>
+<b>Traitements <code>Python</code> :</b>
+</p>
+<ul class="org-ul">
+<li>Utilisation de la librairie <code>Pandas</code>.
+<ul class="org-ul">
+<li>lecture des données avec la fonction <code>read_excel</code> ;</li>
+<li>écriture des données avec la méthode <code>to_excel</code>.</li>
+</ul></li>
+<li>La librairie <code>openpyxl</code> doit être installée (<code>!pip install openpyxl</code>) pour ouvrir un fichier
+<code>xlsx</code> avec <code>Pandas</code>.</li>
+<li>La librairie <code>xlrd</code> doit être installée (<code>!pip install xlrd</code>) pour ouvrir un fichier
+<code>xls</code> (ancien format Excel) avec <code>Pandas</code>.</li>
+</ul>
+
+<p>
+<b>Exemple 1 : lecture/écriture basique</b>
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #F0DFAF; font-weight: bold;">import</span> pandas <span style="color: #F0DFAF; font-weight: bold;">as</span> pd
+
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Lecture</span>
+<span style="color: #DFAF8F;">data_xlsx_path</span> = <span style="color: #CC9393;">"https://roland-donat.github.io/ubs-lpsdm-qualite-donnees/2021-2022/datatype/data/myco.xlsx"</span>
+<span style="color: #DFAF8F;">data_xlsx</span> = pd.read_excel(data_xlsx_path)
+
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Nettoyage</span>
+data_xlsx.drop(columns=[col <span style="color: #F0DFAF; font-weight: bold;">for</span> col <span style="color: #F0DFAF; font-weight: bold;">in</span> data_xlsx.columns \
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #F0DFAF; font-weight: bold;">if</span> col.startswith(<span style="color: #CC9393;">"Unnamed"</span>)], inplace=<span style="color: #BFEBBF;">True</span>)
+
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">&#201;criture</span>
+data_xlsx.to_excel(<span style="color: #CC9393;">"myco_template.xlsx"</span>, index=<span style="color: #BFEBBF;">False</span>)  
+</pre>
+</div>
+
+<p>
+<b>Exemple 2 : lecture de tous les onglets du fichier</b>
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #F0DFAF; font-weight: bold;">import</span> pandas <span style="color: #F0DFAF; font-weight: bold;">as</span> pd
+
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Lecture</span>
+<span style="color: #DFAF8F;">data_xlsx_path</span> = <span style="color: #CC9393;">"https://roland-donat.github.io/ubs-lpsdm-qualite-donnees/2021-2022/datatype/data/myco.xlsx"</span>
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Le r&#233;sultat est un dictionnaire de DataFrames (un DataFrame par onglet)</span>
+<span style="color: #DFAF8F;">data_xlsx_all</span> = pd.read_excel(data_xlsx_path, sheet_name=<span style="color: #BFEBBF;">None</span>)
+
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Acc&#232;s &#224; l'onglet "Template"</span>
+<span style="color: #DFAF8F;">data_xlsx_template</span> = data_xlsx_all[<span style="color: #CC9393;">"Template"</span>]
+data_xlsx_template.drop(columns=[col <span style="color: #F0DFAF; font-weight: bold;">for</span> col <span style="color: #F0DFAF; font-weight: bold;">in</span> data_xlsx_template.columns \
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span><span style="color: #F0DFAF; font-weight: bold;">if</span> col.startswith(<span style="color: #CC9393;">"Unnamed"</span>)], inplace=<span style="color: #BFEBBF;">True</span>)
+</pre>
+</div>
+
+<p>
+<b>Exemple 2 (suite) : Écriture dans plusieurs onglets</b>
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #F0DFAF; font-weight: bold;">with</span> pd.ExcelWriter(<span style="color: #CC9393;">'myco_stadiums.xlsx'</span>) <span style="color: #F0DFAF; font-weight: bold;">as</span> writer:
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   data_xlsx_template.to_excel(writer, sheet_name=<span style="color: #CC9393;">'myco'</span>)
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   data_csv.to_excel(writer, sheet_name=<span style="color: #CC9393;">'stadiums'</span>)
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5d44863" class="outline-2">
+<h2 id="org5d44863"><span class="section-number-2">4.</span> Format JSON</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+<b>Caractéristiques :</b>
+</p>
+<ul class="org-ul">
+<li>Le format JSON (<i>JavaScript Object Notation</i>) est un format d'échange de données dont la syntaxe
+s'inspire des objets du langage <code>JavaScript</code>.</li>
+<li>Sa simplicité et son expressivité ont fait de JSON un des standard d'échange de données les plus
+utilisés à l'heure actuelle.</li>
+<li>Le format JSON peut représenter des nombres, des booléens, des chaînes, la valeur <code>null</code>, des
+séquences de valeurs ordonnées, des objets, etc.</li>
+<li>Le format s'articule autour de deux structures de données élémentaires :
+<ul class="org-ul">
+<li>les collections de paires clé/valeur, très similaires aux dictionnaires <code>Python</code> ;</li>
+<li>les liste ordonnée de valeurs, très similaires aux listes <code>Python</code>.</li>
+</ul></li>
+</ul>
+
+<p>
+<b>Exemple de données JSON :</b>
+</p>
+<div class="org-src-container">
+<pre class="src src-python">{
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span> <span style="color: #CC9393;">"data"</span>: [
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   {
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span> <span style="color: #CC9393;">"name"</span>: <span style="color: #CC9393;">"Banane"</span>,
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span> <span style="color: #CC9393;">"price"</span>: 5.99,
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span> <span style="color: #CC9393;">"code"</span>: 77
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   },
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   {
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span> <span style="color: #CC9393;">"name"</span>: <span style="color: #CC9393;">"Pomme"</span>,
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span> <span style="color: #CC9393;">"price"</span>: 2.99,
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span> <span style="color: #CC9393;">"code"</span>: 99
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   },
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   {
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span> <span style="color: #CC9393;">"name"</span>: <span style="color: #CC9393;">"Poire"</span>,
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span> <span style="color: #CC9393;">"price"</span>: 7.99,
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span> <span style="color: #CC9393;">"code"</span>: 170
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   }
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span> ]
+}
+</pre>
+</div>
+
+<p>
+<b>Traitements <code>Python</code> :</b>
+</p>
+<ul class="org-ul">
+<li>Utilisation du module <code>json</code>.
+<ul class="org-ul">
+<li>lecture des données avec la fonction <code>load</code> ;</li>
+<li>écriture des données avec la fonction <code>dump</code>.</li>
+</ul></li>
+<li>Manipulation des données :
+<ul class="org-ul">
+<li>sous forme de dictionnaire ;</li>
+<li>avec <code>Pandas</code> si les données sont compatibles avec le format tabulaire.</li>
+</ul></li>
+</ul>
+
+<p>
+<b>Exemple :</b>
+</p>
+<ul class="org-ul">
+<li>Télécharger le fichier <a href="https://roland-donat.github.io/ubs-lpsdm-qualite-donnees/2021-2022/datatype/data/station_status.json">station_status.json</a> sur votre poste.</li>
+<li>Importer le fichier par glisser-déposer dans votre environnement Deepnote.</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #F0DFAF; font-weight: bold;">import</span> json
+<span style="color: #F0DFAF; font-weight: bold;">import</span> pandas <span style="color: #F0DFAF; font-weight: bold;">as</span> pd
+
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Lecture des donn&#233;es sous la forme d'un dictionnaire</span>
+<span style="color: #DFAF8F;">data_json_path</span> = <span style="color: #CC9393;">"station_status.json"</span>
+<span style="color: #F0DFAF; font-weight: bold;">with</span> <span style="color: #DCDCCC; font-weight: bold;">open</span>(data_json_path, <span style="color: #CC9393;">'r'</span>) <span style="color: #F0DFAF; font-weight: bold;">as</span> json_file:
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DFAF8F;">data_json</span> = json.load(json_file)
+
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Conversion de la partie `data/stations` en DataFrame pour traitements</span>
+<span style="color: #DFAF8F;">stations_df</span> = pd.DataFrame(data_json[<span style="color: #CC9393;">"data"</span>][<span style="color: #CC9393;">"stations"</span>])
+
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Conversion de l'instant de mise &#224; jour (en secondes) en date </span>
+<span style="color: #DFAF8F;">stations_df</span>[<span style="color: #CC9393;">"last_reported_dt"</span>] = \
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   pd.to_datetime(stations_df[<span style="color: #CC9393;">"last_reported"</span>], unit=<span style="color: #CC9393;">"s"</span>)\
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span> .astype(<span style="color: #DCDCCC; font-weight: bold;">str</span>)
+
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Mise &#224; jour du dictionnaire de donn&#233;es initial avec les nouvelles donn&#233;es</span>
+data_json[<span style="color: #CC9393;">"data"</span>][<span style="color: #CC9393;">"stations"</span>] = stations_df.to_dict(<span style="color: #CC9393;">"records"</span>)
+
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">&#201;criture du dictionnaire mis &#224; jour sous forme de fichier json</span>
+<span style="color: #DFAF8F;">data_json_bis_path</span> = <span style="color: #CC9393;">"station_status_bis.json"</span>
+<span style="color: #F0DFAF; font-weight: bold;">with</span> <span style="color: #DCDCCC; font-weight: bold;">open</span>(data_json_bis_path, <span style="color: #CC9393;">'w'</span>) <span style="color: #F0DFAF; font-weight: bold;">as</span> json_file:
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   json.dump(data_json, json_file)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc910904" class="outline-2">
+<h2 id="orgc910904"><span class="section-number-2">5.</span> Format YAML</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+<b>Caractéristiques :</b>
+</p>
+
+<ul class="org-ul">
+<li>YAML (<i>YAML Ain't Markup Language</i>) est un format de représentation de données.</li>
+<li>YAML s'inspire des concepts d'autres formats comme JSON ou XML.</li>
+<li>L'objectif du format est de représenter des informations complexes en conservant une certaine
+lisibilité.</li>
+<li>Le format JSON est inclus dans le format YAML, i.e. tout fichier JSON peut être converti en
+fichier YAML sans perte d'information, l'inverse n'est pas possible.</li>
+<li>Sa simplicité et sa lisibilité font de YAML le standard actuel pour l'écriture des fichiers de
+configuration.</li>
+<li>La hiérarchie de la structure de données est assurée par une indentation homogène (comme en
+<code>Python</code>)</li>
+</ul>
+
+<p>
+<b>Exemple de données YAML :</b>
+</p>
+<div class="org-src-container">
+<pre class="src src-yaml"><span style="color: #DFAF8F;">data</span>:
+  - <span style="color: #DFAF8F;">name</span>: Banane
+    <span style="color: #DFAF8F;">price</span>: 5.99
+    <span style="color: #DFAF8F;">code</span>: 77
+  - <span style="color: #DFAF8F;">name</span>: Pomme
+    <span style="color: #DFAF8F;">price</span>: 2.99
+    <span style="color: #DFAF8F;">code</span>: 99
+  - <span style="color: #DFAF8F;">name</span>: Poire
+    <span style="color: #DFAF8F;">price</span>: 7.99
+    <span style="color: #DFAF8F;">code</span>: 170
+</pre>
+</div>
+
+<p>
+<b>Traitements <code>Python</code> :</b>
+</p>
+<ul class="org-ul">
+<li>Utilisation du module <code>pyyaml</code> (<code>!pip install pyyaml</code>).
+<ul class="org-ul">
+<li>lecture des données avec la fonction <code>load</code> ;</li>
+<li>écriture des données avec la fonction <code>dump</code>.</li>
+</ul></li>
+<li>Manipulation des données :
+<ul class="org-ul">
+<li>sous forme de dictionnaire ;</li>
+<li>avec <code>Pandas</code> si les données sont compatibles avec le format tabulaire.</li>
+</ul></li>
+</ul>
+
+<p>
+<b>Exemple :</b>
+</p>
+<ul class="org-ul">
+<li>Télécharger le fichier <a href="https://roland-donat.github.io/ubs-lpsdm-qualite-donnees/2021-2022/datatype/data/quiz.yaml">quiz.yaml</a> sur votre poste.</li>
+<li>Importer le fichier par glisser-déposer dans votre environnement Deepnote.</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #F0DFAF; font-weight: bold;">import</span> yaml
+<span style="color: #F0DFAF; font-weight: bold;">import</span> pandas <span style="color: #F0DFAF; font-weight: bold;">as</span> pd
+
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Lecture des donn&#233;es sous la forme d'un dictionnaire</span>
+<span style="color: #DFAF8F;">data_yaml_path</span> = <span style="color: #CC9393;">"quiz.yaml"</span>
+<span style="color: #F0DFAF; font-weight: bold;">with</span> <span style="color: #DCDCCC; font-weight: bold;">open</span>(data_yaml_path, <span style="color: #CC9393;">'r'</span>) <span style="color: #F0DFAF; font-weight: bold;">as</span> yaml_file:
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DFAF8F;">data_yaml</span> = yaml.load(yaml_file, Loader=yaml.SafeLoader)
+</pre>
+</div>
+
+<p>
+<b>Exercice :</b>
+À partir du fichier <code>quiz.yaml</code>, construire un <code>DataFrame</code> contenant :
+</p>
+<ul class="org-ul">
+<li>une colonne "Question" contenant le texte de chaque question ;</li>
+<li>une colonne "NbRep" contenant le nombre de bonnes réponses parmi les choix proposés ;</li>
+<li>une colonne "Id" contenant l'identifiant de chaque question représentée par les clés de plus
+haut niveau dans le fichier YAML.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgb5fb5ce" class="outline-2">
+<h2 id="orgb5fb5ce"><span class="section-number-2">6.</span> Format XML</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+<b>Caractéristiques :</b>
+</p>
+<ul class="org-ul">
+<li>Le langage XML (<i>eXtended Markup Language</i>) est un format général de documents orienté texte.</li>
+<li>Le langage XML est un langage orienté texte et formé de balises permettant d'organiser des données de manière structurée.</li>
+<li>Le format XML est utilisé pour le stockage de document ainsi que pour la transmission de données
+entre applications (bien que supplanté par le format JSON aujourd'hui).</li>
+<li>Le langage XML dérive de SGML (<i>Standard Generalized Markup Language</i>) et de HTML (<i>HyperText
+Markup Language</i>).</li>
+</ul>
+
+<p>
+<b>Exemple de données XML :</b>
+</p>
+<div class="org-src-container">
+<pre class="src src-xml">&lt;<span style="color: #93E0E3;">pdv_liste</span>&gt;
+  &lt;<span style="color: #93E0E3;">pdv</span> <span style="color: #DFAF8F;">id</span>=<span style="color: #CC9393;">"1000001"</span> <span style="color: #DFAF8F;">latitude</span>=<span style="color: #CC9393;">"4620114"</span> <span style="color: #DFAF8F;">longitude</span>=<span style="color: #CC9393;">"519791"</span> <span style="color: #DFAF8F;">cp</span>=<span style="color: #CC9393;">"01000"</span> <span style="color: #DFAF8F;">pop</span>=<span style="color: #CC9393;">"R"</span>&gt;
+    &lt;<span style="color: #93E0E3;">adresse</span>&gt;596 AVENUE DE TREVOUX&lt;/<span style="color: #93E0E3;">adresse</span>&gt;
+    &lt;<span style="color: #93E0E3;">ville</span>&gt;SAINT-DENIS-L&#232;S-BOURG&lt;/<span style="color: #93E0E3;">ville</span>&gt;
+    &lt;<span style="color: #93E0E3;">services</span>&gt;
+      &lt;<span style="color: #93E0E3;">service</span>&gt;Station de gonflage&lt;/<span style="color: #93E0E3;">service</span>&gt;
+      &lt;<span style="color: #93E0E3;">service</span>&gt;Vente de gaz domestique (Butane, Propane)&lt;/<span style="color: #93E0E3;">service</span>&gt;
+      &lt;<span style="color: #93E0E3;">service</span>&gt;DAB (Distributeur automatique de billets)&lt;/<span style="color: #93E0E3;">service</span>&gt;
+    &lt;/<span style="color: #93E0E3;">services</span>&gt;
+    &lt;<span style="color: #93E0E3;">prix</span> <span style="color: #DFAF8F;">nom</span>=<span style="color: #CC9393;">"Gazole"</span> <span style="color: #DFAF8F;">id</span>=<span style="color: #CC9393;">"1"</span> <span style="color: #DFAF8F;">maj</span>=<span style="color: #CC9393;">"2021-11-19T10:00:41"</span> <span style="color: #DFAF8F;">valeur</span>=<span style="color: #CC9393;">"1524"</span>/&gt;
+    &lt;<span style="color: #93E0E3;">prix</span> <span style="color: #DFAF8F;">nom</span>=<span style="color: #CC9393;">"SP95"</span> <span style="color: #DFAF8F;">id</span>=<span style="color: #CC9393;">"2"</span> <span style="color: #DFAF8F;">maj</span>=<span style="color: #CC9393;">"2021-11-19T10:00:41"</span> <span style="color: #DFAF8F;">valeur</span>=<span style="color: #CC9393;">"1616"</span>/&gt;
+    &lt;<span style="color: #93E0E3;">prix</span> <span style="color: #DFAF8F;">nom</span>=<span style="color: #CC9393;">"SP98"</span> <span style="color: #DFAF8F;">id</span>=<span style="color: #CC9393;">"6"</span> <span style="color: #DFAF8F;">maj</span>=<span style="color: #CC9393;">"2021-11-19T10:00:41"</span> <span style="color: #DFAF8F;">valeur</span>=<span style="color: #CC9393;">"1660"</span>/&gt;
+    &lt;<span style="color: #93E0E3;">rupture</span> <span style="color: #DFAF8F;">id</span>=<span style="color: #CC9393;">"4"</span> <span style="color: #DFAF8F;">nom</span>=<span style="color: #CC9393;">"GPLc"</span> <span style="color: #DFAF8F;">debut</span>=<span style="color: #CC9393;">"2017-09-16T09:50:23"</span> <span style="color: #DFAF8F;">fin</span>=<span style="color: #CC9393;">""</span>/&gt;
+    &lt;<span style="color: #93E0E3;">rupture</span> <span style="color: #DFAF8F;">id</span>=<span style="color: #CC9393;">"3"</span> <span style="color: #DFAF8F;">nom</span>=<span style="color: #CC9393;">"E85"</span> <span style="color: #DFAF8F;">debut</span>=<span style="color: #CC9393;">"2017-09-16T09:50:23"</span> <span style="color: #DFAF8F;">fin</span>=<span style="color: #CC9393;">""</span>/&gt;
+    &lt;<span style="color: #93E0E3;">rupture</span> <span style="color: #DFAF8F;">id</span>=<span style="color: #CC9393;">"5"</span> <span style="color: #DFAF8F;">nom</span>=<span style="color: #CC9393;">"E10"</span> <span style="color: #DFAF8F;">debut</span>=<span style="color: #CC9393;">"2018-12-13T09:49:49"</span> <span style="color: #DFAF8F;">fin</span>=<span style="color: #CC9393;">""</span>/&gt;
+  &lt;/<span style="color: #93E0E3;">pdv</span>&gt;
+  &lt;<span style="color: #93E0E3;">pdv</span> <span style="color: #DFAF8F;">id</span>=<span style="color: #CC9393;">"1000002"</span> <span style="color: #DFAF8F;">latitude</span>=<span style="color: #CC9393;">"4621842"</span> <span style="color: #DFAF8F;">longitude</span>=<span style="color: #CC9393;">"522767"</span> <span style="color: #DFAF8F;">cp</span>=<span style="color: #CC9393;">"01000"</span> <span style="color: #DFAF8F;">pop</span>=<span style="color: #CC9393;">"R"</span>&gt;
+    &lt;<span style="color: #93E0E3;">adresse</span>&gt;16 Avenue de Marboz&lt;/<span style="color: #93E0E3;">adresse</span>&gt;
+    &lt;<span style="color: #93E0E3;">ville</span>&gt;BOURG-EN-BRESSE&lt;/<span style="color: #93E0E3;">ville</span>&gt;
+    &lt;<span style="color: #93E0E3;">services</span>&gt;
+      &lt;<span style="color: #93E0E3;">service</span>&gt;Vente de gaz domestique (Butane, Propane)&lt;/<span style="color: #93E0E3;">service</span>&gt;
+      &lt;<span style="color: #93E0E3;">service</span>&gt;DAB (Distributeur automatique de billets)&lt;/<span style="color: #93E0E3;">service</span>&gt;
+    &lt;/<span style="color: #93E0E3;">services</span>&gt;
+    &lt;<span style="color: #93E0E3;">prix</span> <span style="color: #DFAF8F;">nom</span>=<span style="color: #CC9393;">"Gazole"</span> <span style="color: #DFAF8F;">id</span>=<span style="color: #CC9393;">"1"</span> <span style="color: #DFAF8F;">maj</span>=<span style="color: #CC9393;">"2021-11-18T15:00:57"</span> <span style="color: #DFAF8F;">valeur</span>=<span style="color: #CC9393;">"1527"</span>/&gt;
+    &lt;<span style="color: #93E0E3;">prix</span> <span style="color: #DFAF8F;">nom</span>=<span style="color: #CC9393;">"SP95"</span> <span style="color: #DFAF8F;">id</span>=<span style="color: #CC9393;">"2"</span> <span style="color: #DFAF8F;">maj</span>=<span style="color: #CC9393;">"2021-11-18T15:00:58"</span> <span style="color: #DFAF8F;">valeur</span>=<span style="color: #CC9393;">"1631"</span>/&gt;
+    &lt;<span style="color: #93E0E3;">prix</span> <span style="color: #DFAF8F;">nom</span>=<span style="color: #CC9393;">"SP98"</span> <span style="color: #DFAF8F;">id</span>=<span style="color: #CC9393;">"6"</span> <span style="color: #DFAF8F;">maj</span>=<span style="color: #CC9393;">"2021-11-18T15:00:58"</span> <span style="color: #DFAF8F;">valeur</span>=<span style="color: #CC9393;">"1670"</span>/&gt;
+    &lt;<span style="color: #93E0E3;">rupture</span> <span style="color: #DFAF8F;">id</span>=<span style="color: #CC9393;">"3"</span> <span style="color: #DFAF8F;">nom</span>=<span style="color: #CC9393;">"E85"</span> <span style="color: #DFAF8F;">debut</span>=<span style="color: #CC9393;">"2017-09-07T11:05:59"</span> <span style="color: #DFAF8F;">fin</span>=<span style="color: #CC9393;">""</span>/&gt;
+    &lt;<span style="color: #93E0E3;">rupture</span> <span style="color: #DFAF8F;">id</span>=<span style="color: #CC9393;">"4"</span> <span style="color: #DFAF8F;">nom</span>=<span style="color: #CC9393;">"GPLc"</span> <span style="color: #DFAF8F;">debut</span>=<span style="color: #CC9393;">"2017-09-07T11:05:59"</span> <span style="color: #DFAF8F;">fin</span>=<span style="color: #CC9393;">""</span>/&gt;
+    &lt;<span style="color: #93E0E3;">rupture</span> <span style="color: #DFAF8F;">id</span>=<span style="color: #CC9393;">"5"</span> <span style="color: #DFAF8F;">nom</span>=<span style="color: #CC9393;">"E10"</span> <span style="color: #DFAF8F;">debut</span>=<span style="color: #CC9393;">"2017-09-07T11:05:59"</span> <span style="color: #DFAF8F;">fin</span>=<span style="color: #CC9393;">""</span>/&gt;
+  &lt;/<span style="color: #93E0E3;">pdv</span>&gt;
+&lt;/<span style="color: #93E0E3;">pdv_liste</span>&gt;
+</pre>
+</div>
+<ul class="org-ul">
+<li>Un document XML est composé de noeuds définis sous la forme de balise <code>&lt;nom_du_noeud&gt; ... contenu
+  ... &lt;/nom_du_noeud&gt;</code> ou <code>&lt;nom_du_noeud/&gt;</code> si ce dernier ne possède pas de contenu.</li>
+<li>Le contenu d'un noeud peut être du texte (ou des valeurs numériques qui seront interprétées comme
+du texte) ou d'autres noeuds.</li>
+<li>Un noeud peut également avoir des attributs définis sous la forme de clés/valeurs placés au niveau
+de la balise d'ouverture du noeud.</li>
+<li>Exemple : le noeud <code>&lt;prix nom="Gazole" id="1" maj="2021-11-18T15:00:57" valeur="1527"/&gt;</code> possèdent
+4 attributs <code>nom</code>, <code>id</code>, <code>maj</code> et <code>valeur</code> mais ne possède pas de contenu.</li>
+</ul>
+
+
+<p>
+<b>Traitements <code>Python</code> :</b>
+</p>
+<ul class="org-ul">
+<li>Utilisation du module <code>lxml</code> (<code>!pip install lxml</code>).</li>
+<li>La lecture des données est réalisée sous la forme d'un parcours du document (on parle de
+<i>parsing</i>) en suivant sa
+structure hiérarchique arborescente (objet <a href="https://lxml.de/tutorial.html"><code>etree</code></a>).</li>
+<li>En général, on ne cherche pas à stocker entièrement le contenu du fichier XML dans une structure
+<code>Python</code>.</li>
+<li>La démarche usuelle consiste à extraire du document uniquement les informations importantes afin
+de les traiter ultérieurement <i>via</i> des structures <code>Python</code> classiques (dictionnaires, DataFrames,
+etc).</li>
+<li>La recherche des données pertinentes dans la structure XML peut s'effectuer avec la méthode
+<a href="https://python.doctor/page-xml-python-xpath"><code>.xpath</code></a>. À noter que XPath (<i>XML Path Language</i>) est un langage de requête permettant d'extraire
+des éléments d'un document XML. Ce langage peut paraître relativement complexe au premier abord
+mais s'avère extrêmement pratique pour traiter les grands documents XML.</li>
+</ul>
+
+<p>
+<b>Exemple :</b>
+</p>
+<ul class="org-ul">
+<li>Télécharger le fichier <a href="https://roland-donat.github.io/ubs-lpsdm-qualite-donnees/2021-2022/datatype/data/prix_carburant.xml">prix_carburant.xml</a> sur votre poste
+(<a href="https://www.data.gouv.fr/fr/datasets/prix-des-carburants-en-france/">Source : data.gouv.fr</a>).</li>
+<li>Importer le fichier par glisser-déposer dans votre environnement Deepnote.</li>
+<li>Objectif : calculer le prix moyen du gazole.</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #F0DFAF; font-weight: bold;">from</span> lxml <span style="color: #F0DFAF; font-weight: bold;">import</span> etree
+<span style="color: #F0DFAF; font-weight: bold;">import</span> pandas <span style="color: #F0DFAF; font-weight: bold;">as</span> pd
+
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Lecture du fichier XML dans un objet etree</span>
+<span style="color: #DFAF8F;">data_xml_path</span> = <span style="color: #CC9393;">"prix_carburant.xml"</span>
+<span style="color: #DFAF8F;">data_tree</span> = etree.parse(data_xml_path)
+
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">R&#233;cup&#233;ration des noeuds prix ayant leur attribut nom="Gazole"</span>
+<span style="color: #DFAF8F;">prix_elt_list</span> = data_tree.xpath(<span style="color: #CC9393;">'//prix[@nom="Gazole"]'</span>)
+
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Parcours des noeuds prix afin d'en extraire les attributs valeur</span>
+<span style="color: #DFAF8F;">prix_gazole</span> = []
+<span style="color: #F0DFAF; font-weight: bold;">for</span> prix_elt <span style="color: #F0DFAF; font-weight: bold;">in</span> prix_elt_list:
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   prix_gazole.append(prix_elt.xpath(<span style="color: #CC9393;">'@valeur'</span>)[0])
+
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Conversion de la liste de valeurs en Series Pandas pour faciliter les traitements</span>
+<span style="color: #DFAF8F;">prix_gazole_s</span> = pd.Series(prix_gazole).astype(<span style="color: #DCDCCC; font-weight: bold;">int</span>)
+
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Calcul du prix moyen du gazole :</span>
+<span style="color: #F0DFAF; font-weight: bold;">print</span>(f<span style="color: #CC9393;">"Prix moyen du gazole = {prix_gazole_s.mean()/1000:.4} &#8364;"</span>)
+</pre>
+</div>
+
+<p>
+<b>Exercice :</b>
+</p>
+<ol class="org-ol">
+<li>De quand date ce fichier ? Les informations sont-elles à jour ?</li>
+<li>Aller chercher le fichier des prix des carburants du jour sur <a href="https://www.data.gouv.fr/fr/datasets/prix-des-carburants-en-france/">Source : data.gouv.fr</a>.</li>
+<li>Calculer le prix moyen journalier de tous carburants.</li>
+<li>Construire un <code>DataFrame</code> contenant les colonnes suivantes :
+<ul class="org-ul">
+<li>l'identifiant du point de vente (PDV) ;</li>
+<li>l'adresse du point de vente ;</li>
+<li>la ville du point de vente ;</li>
+<li>le prix de chaque carburant.</li>
+</ul></li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-orgd640e9a" class="outline-2">
+<h2 id="orgd640e9a"><span class="section-number-2">7.</span> <i>Web scraping</i></h2>
+<div class="outline-text-2" id="text-7">
+</div>
+<div id="outline-container-orga7b266c" class="outline-3">
+<h3 id="orga7b266c"><span class="section-number-3">7.1.</span> Définition</h3>
+<div class="outline-text-3" id="text-7-1">
+<p>
+Le <i>web scraping</i> est l'art d'extraire des données depuis un site web. Cette technique permet de
+récupérer des informations depuis site grâce à un logiciel et de les réutiliser ensuite.
+</p>
+
+<p>
+En pratique, le logiciel de scraping va parcourir les pages web cibles et tenter de
+tirer parti de la structure de leur code HTML afin de localiser les informations pertinentes.
+</p>
+
+<p>
+Le <i>web scraping</i> est particulièrement utile dans le cadre de la prospection
+ou de la veille concurrentielle d'une entreprise. On peut ainsi récolter les données d'un site concurrent
+pour surveiller ses variations de prix ou bien l'évolution de ses offres. Cela permet également de
+récupérer des retours clients et de réaliser des traitements statistiques sur ces derniers.
+</p>
+
+<p>
+<b>À noter que le <i>web scraping</i> n'a d'intérêt que si le site ciblé ne possède pas d'API permettant
+d'accéder facilement aux données recherchées.</b> 
+</p>
+</div>
+</div>
+
+<div id="outline-container-org87a87cf" class="outline-3">
+<h3 id="org87a87cf"><span class="section-number-3">7.2.</span> Technique de <i>scraping</i> avec <code>Python</code></h3>
+<div class="outline-text-3" id="text-7-2">
+<p>
+Les principales librairies <code>Python</code> permettant de faire du <i>web scraping</i> sont les suivantes :
+</p>
+<ul class="org-ul">
+<li><a href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/"><code>Beautiful Soup</code></a> : Librairie de référence pour le <i>web scraping</i>. <code>Beautiful Soup</code> permet
+d'explorer le contenu des pages web bien structurées ou non.</li>
+<li><a href="https://lxml.de/"><code>lxml</code></a> : Librairie conçue initialement pour l'exploration des fichiers XML fonctionne également
+très bien avec les documents HTML bien structurés. En revanche, pour les pages HTML mal conçues,
+<code>lxml</code> n'est pas l'outil approprié.</li>
+<li><a href="https://docs.scrapy.org/en/latest/intro/tutorial.html"><code>scrapy</code></a> : Librairie proposant un ensemble d'outils de <i>web scraping</i> avancés. <code>scrapy</code> est
+probablement l'outil <code>Python</code> de <i>web scraping</i> le plus puissant en termes de fonctionnalités et
+de performances. Toutefois, <code>scrapy</code> est plus complexe à prendre en main que <code>Beautiful Soup</code> et
+<code>lxml</code> et s'adresse plutôt à des utilisateurs expérimentés.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org2113ce3" class="outline-3">
+<h3 id="org2113ce3"><span class="section-number-3">7.3.</span> Exemple</h3>
+<div class="outline-text-3" id="text-7-3">
+<p>
+Dans cet exemple, nous allons tenter d'extraire automatiquement les sujets postés sur le forum Morbihan du site du
+Routard : <a href="https://www.routard.com/forum_voyage/1511_morbihan_bretagne/60.htm">https://www.routard.com/forum_voyage/1511_morbihan_bretagne/60.htm</a>.
+</p>
+
+<p>
+Pour ce faire, nous utiliserons la librairie Beautiful Soup (<code>!pip install beautifulsoup4 requests</code>). L'objectif final est de construire un DataFrame contenant les titres des sujets
+postés dans le forum avec leur auteur et la date du dernier message.
+</p>
+
+<p>
+Les grandes étapes du traitement sont les suivantes :
+</p>
+<ol class="org-ol">
+<li>Ouvrir la page web cible et analyser rapidement son code source afin de repérer où se situent les
+informations recherchées.</li>
+<li>Lire la page web avec Beautiful Soup.</li>
+<li>Extraire une liste d'éléments contenant les informations recherchées.</li>
+<li>En considérant uniquement le premier élément de la liste précédente, extraire le sujet, l'URL, le
+nombre de vues, le nombre de messages et la date du dernier message de l'article considéré.</li>
+</ol>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Import des modules</span>
+<span style="color: #F0DFAF; font-weight: bold;">import</span> pandas <span style="color: #F0DFAF; font-weight: bold;">as</span> pd
+<span style="color: #F0DFAF; font-weight: bold;">import</span> requests
+<span style="color: #F0DFAF; font-weight: bold;">from</span> bs4 <span style="color: #F0DFAF; font-weight: bold;">import</span> BeautifulSoup
+
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Lecture de la page web</span>
+<span style="color: #DFAF8F;">url</span> = <span style="color: #CC9393;">"https://www.routard.com/forum_voyage/1511_morbihan_bretagne/60.htm"</span>
+<span style="color: #DFAF8F;">html_text</span> = requests.get(url).text
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">L'objet soup contient une repr&#233;sentation structur&#233;e de la page web. </span>
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Nous allons donc pouvoir effectuer des requ&#234;tes sur cet objet afin </span>
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">d'extraire les informations souhait&#233;es.</span>
+<span style="color: #DFAF8F;">soup</span> = BeautifulSoup(html_text, <span style="color: #CC9393;">'html.parser'</span>)
+
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Recheche de tous les &#233;l&#233;ments HTML de type "tr" ayant une classe topic-list-item</span>
+<span style="color: #DFAF8F;">sujet_soup_list</span> = soup.find_all(<span style="color: #CC9393;">"tr"</span>, {<span style="color: #CC9393;">"class"</span>: <span style="color: #CC9393;">"topic-list-item"</span>})
+
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Analyse du premier &#233;l&#233;ment afin d'extraire les informations souhait&#233;es</span>
+<span style="color: #DFAF8F;">sujet_soup</span> = sujet_soup_list[0]
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Extraction du titre</span>
+sujet_soup.find(itemprop=<span style="color: #CC9393;">"name"</span>).get(<span style="color: #CC9393;">"content"</span>)
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Extraction de l'url</span>
+sujet_soup.find(itemprop=<span style="color: #CC9393;">"url"</span>).get(<span style="color: #CC9393;">"content"</span>)
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Extraction du nombre de messages</span>
+sujet_soup.find(<span style="color: #CC9393;">"td"</span>, attrs={<span style="color: #CC9393;">'class'</span>: <span style="color: #CC9393;">"replies"</span>}).getText().strip()
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Extraction du nombre de vues</span>
+sujet_soup.find(<span style="color: #CC9393;">"td"</span>, attrs={<span style="color: #CC9393;">'class'</span>: <span style="color: #CC9393;">"views"</span>}).getText().strip()
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Extraction de la date du dernier message</span>
+sujet_soup.find(<span style="color: #CC9393;">"td"</span>, attrs={<span style="color: #CC9393;">'class'</span>: <span style="color: #BFEBBF;">None</span>}).getText().strip()
+</pre>
+</div>
+
+<p>
+<b>Exercice :</b>
+</p>
+<ol class="org-ol">
+<li>Automatiser le processus précédent afin de récupérer les informations de tous les articles de la page.</li>
+<li>Stocker le résultat final dans un <code>DataFrame</code>.</li>
+<li>Extraire également le pseudonyme de l'auteur de l'article.</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
